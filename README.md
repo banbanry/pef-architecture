@@ -1,64 +1,127 @@
 # PEF Architecture
 
-> **从第一性原理重新定义系统架构。**
-> PEF 是一套跨硬件与软件的统一架构范式，用不可再分的原语、不可伪造的坐标轴和可验证的审问机制，回答"系统是什么"这一根本问题。
+> **A first-principles architecture for deterministic, verifiable systems.**
+> PEF redefines what a system *is* before asking how it is built. Every concept below has a strict definition — these are not borrowed from any programming language.
 
 ---
 
-## PEF 是什么
+## What is PEF
 
-PEF 不是一个框架、不是一个库、不是一种编程语言。PEF 是一套**架构公理体系**——它定义了描述任何计算系统所需的最小完备原语，以及这些原语之间的约束关系。
+PEF is not a framework, not a library, not a language. PEF is an **axiomatic architecture system** — it defines the minimal complete primitives needed to describe any computational system, and the constraints that bind them.
 
-传统软件工程从"怎么实现"出发，PEF 从"系统是什么"出发。先定义公理，再推导设计，最后才是实现。
+Traditional software engineering starts from *how to implement*. PEF starts from *what a system is*. Axioms first, derivation second, implementation last.
 
-## 两套引用，同一范式
+---
 
-PEF 在硬件和软件两个领域有同构的引用方式，证明其普适性：
+## The Three Primitives (P · E · F)
 
-| 领域 | 引用方式 | 核心要素 |
-|------|---------|---------|
-| **硬件** | 四域隔离架构（P·E·F·M） | P 主体 · E 审计 · F 裁决 · M 时序规则跳变 |
-| **软件** | 三元原语（P·E·F） | P 主体 · E 执行变量 · F 结果 |
+PEF stands for **Primary Entity – Execution Variable – Final Result**. These three primitives form the minimal complete description of the act of computation: *who acts (P), with what variable (E), yielding what result (F)*. None is dispensable.
 
-硬件四域中的 M（时序/监控）在软件范式中由 π 锚定坐标系和 MOD3 状态机承担，二者数学同构。
+### P · Primary Entity
 
-## 核心主张
+**The acting subject of a computation task.**
 
-1. **第一性原理**：一切设计从不可再分的基本原理出发，拒绝堆砌式经验主义
-2. **确定性推理**：用可复现的推导过程替代"大概、可能、试试看"
-3. **不可伪造坐标**：用数学常数 π 作为系统的时间/身份坐标轴，AI 无法预测或伪造
-4. **审问即验证**：同一系统在不同审问强度下得出不同判决，揭示隐藏脆弱性
-5. **最终裁决权外置**：裁决权不属于任何处理器或软件，而属于独立于可编程器件的确定性路径
+P must be explicitly declared with four fields:
 
-## 仓库结构
+| Field | Meaning |
+|-------|---------|
+| `name` | Identity of the entity |
+| `type` | Category (LOGICAL / PHYSICAL / HUMAN) |
+| `boundary` | Scope of responsibility |
+| `unit` | Unit of measurement |
+
+P is the starting point of all audit. Without an explicit subject, variable boundary violations and result illegitimacy cannot be judged. An anonymous actor is not admitted in PEF.
+
+### E · Execution Variable
+
+> **In PEF, a variable is not a static container. A variable is a measurable shift in potential difference.**
+
+This is the strict PEF definition of "variable" — deliberately distinct from the loose, overloaded meaning of "variable" in programming languages. In PEF:
+
+- A variable exists **only where there is a gradient** — a difference, a tension, a potential to be measured. No potential difference, no variable.
+- **Even observation is an influence on the variable.** There is no passive measurement. The act of observing introduces a perturbation; the observer and the observed are coupled. This observer effect is not a bug to be eliminated — it is an axiomatic property built into the system.
+- Variables must be explicitly partitioned into:
+  - **E_in** (controllable input): variables the subject may construct and modify
+  - **E_out** (uncontrollable output): environmental quantities the subject may only observe, never modify
+- Mixing E_in and E_out causes **hallucinatory optimization**: the subject treats an uncontrollable variable as if it were controllable, producing illusory "improvements" that collapse in the real environment.
+
+**Why PEF defines "variable" this way:** because every programming language defines "variable" differently — as a memory slot, a reference, a binding, a channel. PEF needs its own definition grounded in physics (potential difference) and epistemology (observer effect), so that the architecture does not inherit the ambiguity of any particular language.
+
+### F · Final Result
+
+**The output of a computation task.**
+
+F must be traceable to `(P, E, t)` — a result produced by a specific subject, using specific variables, at a specific moment.
+
+Formal statement:
+
+```
+F = f(P, E_in, E_out, t)
+```
+
+where `f` is an operator and `t` is a moment on an unforgeable coordinate.
+
+---
+
+## Temporal Causality Axiom (A4)
+
+> **Time in PEF is not continuous. It proceeds in discrete, irreversible steps. A result cannot precede its cause.**
+
+Key properties:
+
+- **Discrete temporal steps**: time advances in jumps, not a smooth flow. Each step consumes anchor coordinate bits that **cannot be returned**.
+- **No retro-causality**: no downstream result may be referenced as upstream input. A result cannot be used before it is generated.
+- **Monotonicity**: the coordinate is strictly increasing. There is no rollback, no rewind, no "undo" on the temporal axis.
+- **Observer coupling across time**: because observation itself influences variables (see E above), the temporal record is not a passive log — it is a causal chain where every measurement perturbs the next state.
+
+This axiom is why PEF needs an **unforgeable coordinate** (the π-anchor system): if the coordinate could be predicted or rewound by a programmable device, retro-causality becomes possible, and the entire audit chain collapses.
+
+---
+
+## Why This Matters
+
+PEF answers a question that traditional engineering avoids: **what is a system, at the most fundamental level?**
+
+- Not "what language is it written in"
+- Not "what framework does it use"
+- But: *who acts, across what potential-difference shift, yielding what result, on an irreversible causal timeline*
+
+When these primitives are strictly defined and axiomatically constrained, the system becomes **deterministic and verifiable** — not because it is simple, but because every ambiguity has been eliminated by definition.
+
+---
+
+## Repository Structure
 
 ```
 pef-architecture/
-├── README.md          # 本文件：PEF 是什么、核心主张
-├── axioms.md          # 公理法则（PEF 的不可违反原则）
-├── primitives.md      # 三元原语 P·E·F（软件范式的最小完备描述）
-├── pi-anchor.md       # π 锚定坐标系（不可伪造的系统坐标轴）
-├── mod3.md            # MOD3 三态审问架构（不同强度揭示脆弱性）
-└── topology.md        # 五层流水线拓扑（P→E→F→M→C）
+├── README.md          # This file: first principles, primitives, temporal causality
+├── axioms.md          # Full axiom system (A1 unforgeability, A3 variable partition, A4 temporal causality)
+├── primitives.md      # Detailed P·E·F definitions (Chinese)
+├── pi-anchor.md       # The unforgeable coordinate system (π-anchor)
+├── mod3.md            # Three-state interrogation architecture
+└── topology.md        # Five-layer pipeline topology (P→E→F→M→C)
 ```
 
-## 公开边界声明
+> Detailed mechanism documents are in Chinese. English translations are in progress. The conceptual core — primitives, axioms, causality — is defined in this README.
 
-本仓库是 PEF 的**公开理论层**，只包含：
-- 架构定义与公理
-- 原语的抽象描述
-- 核心机制的概念性说明
-- 整体拓扑的理念
+## Public Boundary
 
-**不包含**：具体实现代码、电路原理图、参数阈值、协议字段细节、算子内部逻辑、严核验证的完整推导。这些属于受限技术资料，仅对签约合作者开放。
+This repository is PEF's **public theory layer**. It contains:
+- Architecture definitions and axioms
+- Abstract descriptions of primitives
+- Conceptual explanations of core mechanisms
+- The first-principles foundation
 
-## 阅读路径
+It does **not** contain: implementation code, circuit schematics, parameter thresholds, protocol field details, operator internals, or complete verification derivations. These are restricted technical materials, released only to contracted collaborators.
 
-1. 先读 **axioms.md** — 理解 PEF 的不可违反原则
-2. 再读 **primitives.md** — 理解最小完备原语
-3. 然后读 **pi-anchor.md** 和 **mod3.md** — 理解两大核心机制
-4. 最后读 **topology.md** — 理解整体如何组装
+## Reading Path
+
+1. **This README** — first principles, P·E·F definitions, temporal causality
+2. **axioms.md** — the complete axiom system
+3. **pi-anchor.md** — the unforgeable coordinate that makes causality enforceable
+4. **mod3.md** — how different interrogation intensities reveal hidden fragility
+5. **topology.md** — how the primitives assemble into a five-layer pipeline
 
 ---
 
-*PEF Architecture · Public Theory Layer · 公理先行，实现在后。*
+*PEF Architecture · Public Theory Layer · Axioms first. Implementation last. No retro-causality.*
