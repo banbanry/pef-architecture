@@ -13,17 +13,19 @@ Traditional engineering starts from *how to implement*. PEF starts from *what ea
 
 ---
 
-## A Note on Originality
+## Definition, Not Discovery
 
-The tripartition **subject – variable – result** is **not a PEF invention**. It is a foundational cognitive structure — as old as the Input-Process-Output model in computer science and the agent-action-result framework in philosophy. Every programming language has some version of it.
+PEF **defines** its first principles as three indivisible primitives: **P (subject), E (variable), F (result)**. This is a deliberate definition — not a claim of discovery.
 
-**What PEF contributes is not the discovery of these three categories. What PEF contributes is:**
+Definitions eliminate ambiguity. Within the PEF system, "first principles" means exactly these three — no more, no less. There is no room for interpretation about what the foundational units are.
 
-1. **Strict, language-independent definitions** — grounded in physics (potential difference) and epistemology (observer effect), not borrowed from any particular language
-2. **Axiomatic constraints** between the parts — unforgeability (A1), variable partition (A3), temporal causality (A4)
+The value of this definition is not in the categories themselves — which are foundational and familiar. The value is in what this definition **enables**:
+
+1. **Strict, language-independent definitions** of each primitive — grounded in physics (potential difference) and epistemology (observer effect), not borrowed from any particular programming language
+2. **Axiomatic constraints** between the primitives — unforgeability (A1), variable partition (A3), temporal causality (A4)
 3. **Verifiable mechanisms** that enforce those constraints — the π-anchor coordinate system and the MOD3 three-state interrogation
 
-**Analogy:** John Dalton did not invent atoms — the ancient Greeks had atomism. What Dalton did was give atoms *measurable quantitative properties and relationships*, turning a philosophical speculation into a testable scientific foundation. PEF does not invent subject-variable-result. What PEF does is give them *strict definitions, axiomatic constraints, and enforceable mechanisms*, turning a vague commonplace into a deterministic, auditable pipeline.
+**Analogy:** Axiomatic geometry does not "discover" points and lines — they are primitive notions. What it does is define them strictly and impose axioms (parallel postulate, etc.) that turn vague intuition into a rigorous, derivable system. PEF does the same: subject, variable, and result are primitive notions; PEF defines them strictly and imposes axioms that turn vague engineering intuition into a deterministic, auditable pipeline.
 
 ---
 
