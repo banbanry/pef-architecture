@@ -20,6 +20,178 @@ PEF 从第一性原理解决这个问题：**唯锚才有势差产生。**
 
 ---
 
+## 30-Second TL;DR
+
+| Concept | One sentence |
+|---------|-------------|
+| **Anchor** | An unforgeable, irreversible, globally-unique foundation — π in software, thermodynamic law in hardware. |
+| **Potential difference** | Produced only by the anchor. No anchor → no potential difference → no variable → no evolution. |
+| **P · E · F** | The triad operating on the potential difference: Primary Entity, Execution Variable, Final Result. |
+| **Anchored determinism** | Every variable traces to an anchor-produced potential difference; every result traces to (P, E, t) on an anchor coordinate. |
+| **Two instantiations** | Software PEF (π-anchored: five-layer pipeline + MOD3 interrogation + three-tier ledger) and Physical PEF (thermodynamics-anchored: four-domain pure-hardware veto + ZL-0 drift model). |
+
+---
+
+## Architecture Overview
+
+```mermaid
+graph TB
+    subgraph Meta["PEF Meta-Architecture: Anchor → Potential Difference → Triad"]
+        ANCHOR["Anchor Layer<br/>Unforgeable · Irreversible · Globally Unique"]
+        PD["Potential Difference<br/>Produced by anchor only"]
+        TRIAD["Triad Layer<br/>P · E · F"]
+        ANCHOR --> PD --> TRIAD
+    end
+
+    subgraph SW["Software PEF — π-Anchored"]
+        direction TB
+        SW_P["P Layer<br/>Subject definition + π-anchor binding"]
+        SW_E["E Layer<br/>Variable partition E_in / E_out"]
+        SW_F["F Layer<br/>π-anchor audit + ρ deviation rate + PASS/FAIL"]
+        SW_M["M Layer<br/>Four-stage pipeline review"]
+        SW_C["C Layer<br/>π-bit closure verification"]
+        SW_P --> SW_E --> SW_F --> SW_M --> SW_C
+        SW_MOD3["MOD3 Three-State Interrogation<br/>Loose λ=1.0 / Medium λ=0.8 / Strict λ=0.5"]
+        SW_MOD3 -.->|"drives threshold λ"| SW_F
+        SW_LEDGER["Three-Tier Ledger<br/>Axiom readonly · Runtime read-write · Audit append-only"]
+        SW_LEDGER -.->|"anchors every state"| SW_F
+    end
+
+    subgraph HW["Physical PEF — Thermodynamics-Anchored"]
+        direction TB
+        HW_P["P Domain · Proposal<br/>Strategy / circuit topology / code"]
+        HW_E["E Domain · Veto<br/>Destructive audit · physical deadlock detection"]
+        HW_F["F Domain · Adjudication<br/>Pure combinational logic<br/>P_OK AND E_OK → execute"]
+        HW_M["M Layer · Monitor<br/>Independent watchdog + latch + relay<br/>Cuts main power on failure"]
+        HW_P --> HW_F
+        HW_E --> HW_F
+        HW_F --> HW_M
+        HW_ZL0["ZL-0 Ground-Potential Drift Model<br/>Isomorphic to radiation threshold drift"]
+        HW_ZL0 -.->|"grounds E-domain threshold"| HW_E
+    end
+
+    ANCHOR -.->|"π — transcendental number"| SW
+    ANCHOR -.->|"thermodynamic law"| HW
+```
+
+---
+
+## Real-World Deployment
+
+PEF is not just theory. The software PEF (π-anchored) system has been deployed in production:
+
+**Hongxin Logistics Import/Export Single-Form Processor** — a document processing pipeline for logistics customs declaration, built on the PEF architecture:
+- π-anchored state ledger with three-tier isolation (axiom / runtime / audit)
+- Four-layer onion audit (L1 constitution → L2 physics → L3 evidence → L4 byzantine)
+- 27-grid lattice state monitoring with SHA-256 causal chain
+- MOD3 three-state interrogation driving dynamic threshold λ
+
+The deployment processes real logistics documents (AWB, SI, packing lists) with anchored audit trails — every extraction, every validation, every adjudication is traceable to a π-anchor coordinate.
+
+> *[PEF Gate Hardware Veto White Paper](./PEF-Gate-Hardware-Veto-White-Paper-Public.pdf)* — the physical PEF instantiation: a four-domain pure-hardware veto layer against model deception.
+
+---
+
+## Signature Code
+
+These are the core implementation patterns that make PEF identifiable. They are not pseudocode — they are extracted from the production deployment.
+
+### 1. Anchored Write Timing (Three-Tier Ledger)
+
+Every state record must pass: π-anchor validity → domain consistency (π%3 == domain_tag) → one-to-one binding → temporal ordering (state ≤ anchor ≤ write). Any violation triggers P0 circuit breaker.
+
+```python
+def record(self, pefmod: PEFmod, pi_s: int, metadata=None) -> Dict:
+    """固化写入时序：PEFmod状态更新 → 生成有效Πₛ → 持久写入确认"""
+    # ① L1 π合法性：引用未来态检测
+    if not isinstance(pi_s, int) or not PiSDispatcher.is_active(pi_s):
+        raise PEFBindingError(f'P0: Πₛ={pi_s} 无效或未活动（引用未来态）')
+    # ① 三重一致性：π%3 映射域 == domain_tag（铁律1）
+    ok, msg = self.axiom.validate_domain(pi_s, pefmod.domain_tag)
+    if not ok:
+        raise PEFBindingError(msg)
+    # ② 一对一：不可共享 / 不可变更
+    if self.runtime.get(pi_s) is not None:
+        raise PEFBindingError(f'P0: Πₛ={pi_s} 已登记（不可共享）')
+    # ③ 固化写入时序：状态更新 ≤ 锚生成 ≤ 写入
+    t_state = pefmod.created_at
+    t_anchor = PiSDispatcher.get_alloc_time(pi_s)
+    if t_state > t_anchor:
+        raise PEFBindingError(f'P0: 时序倒置 t_state > t_anchor')
+    # ④ 一次性绑定 + 运行时写入 + 审计追加 + 持久化确认
+    pefmod.bind(pi_s)
+    entry = {'pi_s': pi_s, 'domain_tag': pefmod.domain_tag,
+             'state_hash': pefmod.state_hash, 't_state': t_state,
+             't_anchor': t_anchor, 't_write': utc_now_iso(), 'status': 'ACTIVE'}
+    self.runtime.put(entry)
+    self.audit.append(pi_s, 'PEFMOD_BOUND', f'state_hash={pefmod.state_hash[:12]}')
+    self._persist()
+    return {'pi_s': pi_s, 'status': 'CONFIRMED'}
+```
+
+### 2. Four-Layer Onion Audit
+
+The audit engine peels four layers — each layer can trigger immediate termination (circuit breaker), and the final geometric adjudication compares deviation rate ρ against dynamic threshold λ driven by MOD3.
+
+```python
+def execute(self, full_df, master_df=None, decisions=None):
+    """四层洋葱审计：L1宪法 → L2物理 → L3证据 → L4拜占庭 → 几何裁决"""
+    # L1: 宪法检查（数据完整性 + π合法性 + 三重一致性）
+    err = self._exec_l1_constitution(full_df)
+    if err: return self._build_result()  # 熔断终止
+
+    # L2: 物理检查（PEFmod映射 + 影子图注入）
+    pefmods, err = self._exec_l2_physics(full_df, decisions)
+    if err: return self._build_result()
+
+    # L3: 证据融合（信息熵 + 拜占庭污染检测）
+    err = self._exec_l3_evidence(full_df)
+    if err: return self._build_result()
+
+    # L4: 拜占庭熔断（影子图完整性 + π锚闭环审计）
+    err = self._exec_l4_byzantine(pefmods, decisions)
+    if err: return self._build_result()
+
+    # 几何裁决（第一公理）：ρ ≤ λ → PASS，λ 由 MOD3 状态驱动
+    self.judge()  # rho = S4_Deviation_Rate, lambda = threshold by phase
+    # 公理自检（A1-A8 逐项验证）
+    self._run_self_checklist()
+    return self._build_result()
+```
+
+### 3. 27-Grid Lattice State + Causal Chain
+
+The M-layer (meta-cognition) monitors system state as a point in a 27-grid lattice (P/E/F each in {0,1,2}), encoded as G = 9·S_P + 3·S_E + S_F + 1. Every state snapshot is linked by a SHA-256 hash chain — tampering with any record breaks the entire chain.
+
+```python
+# 27格点编码：G = 9×S_P + 3×S_E + S_F + 1
+def encode_grid(sp, se, sf):
+    if not all(0 <= s <= 2 for s in (sp, se, sf)):
+        raise ValueError(f"状态码必须在0-2之间: P={sp}, E={se}, F={sf}")
+    return 9 * sp + 3 * se + sf + 1
+
+def record_state(self, sp, se, sf, context=None):
+    """记录状态快照到因果链日志（SHA-256哈希链，篡改任一条→全链断裂）"""
+    g = encode_grid(sp, se, sf)
+    dist = abs(sp) + abs(se) + abs(sf)  # 到锚点(0,0,0)的曼哈顿漂移距离
+    entry = {
+        'timestamp': time.time_ns(),
+        'sp': sp, 'se': se, 'sf': sf,
+        'grid_code': g, 'manhattan_distance': dist,
+        'drift_status': classify_drift(float(dist)),  # normal / warning / alarm
+    }
+    if context:
+        entry['context'] = context
+    # 因果链：每条日志哈希链接前一条，prev_hash 不可伪造
+    entry['prev_hash'] = self._last_hash.hex()[:32]
+    entry['hash'] = hashlib.sha256(str(entry).encode('utf-8')).hexdigest()[:32]
+    self._last_hash = bytes.fromhex(entry['hash'])
+    self._chain_log.append(entry)
+    return entry
+```
+
+---
+
 ## What is PEF
 
 PEF is an **anchored deterministic meta-architecture**. It is not a single system, not a library, not a framework. It is a pattern that can be instantiated in different domains with different anchors.
@@ -190,7 +362,9 @@ PEF does not invent new algorithms, new mathematical formalisms, or new control 
 
 ```
 pef-architecture/
-├── README.md          # Meta-architecture, two systems, boundary map, non-obviousness
+├── README.md          # Meta-architecture, two systems, boundary map, non-obviousness, code
+├── LICENSE            # MIT License
+├── PEF-Gate-Hardware-Veto-White-Paper-Public.pdf  # Physical PEF instantiation (desensitized)
 ├── axioms.md          # Software axiom system (A1–A8)
 ├── primitives.md      # Software P·E·F detailed definitions
 ├── pi-anchor.md       # The π-anchor coordinate system
