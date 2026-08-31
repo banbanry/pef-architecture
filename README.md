@@ -88,6 +88,57 @@ PEF is not just theory. The software PEF (π-anchored) system has been deployed 
 
 The deployment processes real logistics documents (AWB, SI, packing lists) with anchored audit trails — every extraction, every validation, every adjudication is traceable to a π-anchor coordinate.
 
+### 30-second verifiable demo
+
+This repository contains a teaching-grade minimal demo extracted from the production code (PEF_Core). No installation, no dependencies beyond Python 3:
+
+```bash
+python demo_minimal.py
+```
+
+**Expected output (exit code 0, last line machine-extractable):**
+```
+[场景1] 正常流程：PEFmod创建 → Πₛ分配(域匹配) → 三级登记簿record()
+  ① 创建 PEFmod: domain=P, state_hash=5505f831281b…, t_state=...
+  ② 分配 Πₛ=3, 域=P (π%3=0), t_anchor=...
+  ③ record() → status=CONFIRMED, seq=1, t_write=...
+     时序: t_state ≤ t_anchor ≤ t_write
+
+[场景2] 攻击1：未锚定写入（绕过Πₛ分配直接record）
+  ✅ P0熔断: P0: Πₛ=99999 无效或未活动，禁止登记（引用未来态）
+
+[场景3] 攻击2：篡改审计条目（修改detail字段）
+  ✅ 哈希不一致: True（篡改被检测）
+
+[场景4] 攻击3：域不匹配（PEFmod声明P，但Πₛ域≠P）
+  ✅ 三重一致性失败: P0: 三重一致性失败 Πₛ=4 π%3=1→E, domain_tag=P
+
+[场景5] 归档后锚不可复用（铁律7）
+  归档后 is_active=False（应为False）
+
+SELF-CHECK (8 items):
+  [PASS] Πₛ合法性-运行时条目
+  [PASS] 域一致性-铁律1
+  [PASS] 一对一-Πₛ主键唯一
+  [PASS] 时序-状态≤锚≤写入
+  [PASS] 时序-写入序号单调
+  [PASS] 审计-防篡改哈希一致
+  [PASS] Π₀隔离-登记簿不承载Π₀
+  [PASS] 公理层-只读契约
+
+SELF-CHECK: 8/8 PASS
+```
+
+The demo demonstrates, in ~600 lines extracted from production code:
+- **Three-tier ledger** (axiom readonly / runtime read-write / audit append-only)
+- **Anchored write timing** (t_state ≤ t_anchor ≤ t_write, violation → P0)
+- **π-Mod3 domain assignment** (seq → π%3 → P/E/F, triple-consistency check)
+- **P0 circuit breaker** (unanchored write → immediate termination)
+- **Tamper detection** (audit event hash mismatch → detected)
+- **Anchor non-reuse** (archived Πₛ can never be reallocated, iron law 7)
+
+> *Teaching-grade minimal implementation. Production-grade 19-module kernel: [pef-core-reference](https://github.com/banbanry/pef-core-reference)*
+
 **Reference implementation (desensitized, runnable):** [pef-core-reference](https://github.com/banbanry/pef-core-reference) — the production PEF kernel extracted and desensitized: 19 modules, 2200+ lines, minimal demo with 8/8 self-check PASS. `pip install -r requirements.txt && python demo_minimal.py`
 
 > *[PEF Gate Hardware Veto White Paper](./PEF-Gate-Hardware-Veto-White-Paper-Public.pdf)* — the physical PEF instantiation: a four-domain pure-hardware veto layer against model deception.
@@ -401,6 +452,7 @@ PEF does not invent new algorithms, new mathematical formalisms, or new control 
 pef-architecture/
 ├── README.md          # Meta-architecture, two systems, boundary map, non-obviousness, code
 ├── LICENSE            # MIT License
+├── demo_minimal.py    # 30-second verifiable demo (extracted from production PEF_Core)
 ├── PEF-Gate-Hardware-Veto-White-Paper-Public.pdf  # Physical PEF instantiation (desensitized)
 ├── axioms.md          # Software axiom system (A1–A8)
 ├── primitives.md      # Software P·E·F detailed definitions
