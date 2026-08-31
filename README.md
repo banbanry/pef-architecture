@@ -461,7 +461,7 @@ pef-architecture/
 └── topology.md        # Five-layer pipeline topology (software)
 ```
 
-> This repository documents the **software PEF (π-anchored)** system in detail. The physical PEF (thermodynamics-anchored) system is documented in separate hardware specifications. The boundary map above defines what belongs where.
+> This repository is the **public theory layer**: meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, mechanism concepts, a 30-second verifiable demo, and signature code extracted from production. The six `.md` files (`axioms`, `primitives`, `pi-anchor`, `mod3`, `topology`) are **theoretical summaries** — the complete design specification, formal proofs, and full derivation are in the **PEF Gate Hardware Veto White Paper** (PDF, included in this repository) and the **pef-core-reference** code repository. The physical PEF (thermodynamics-anchored) system is documented in separate hardware specifications. The boundary map above defines what belongs where.
 
 ## Public Boundary
 
