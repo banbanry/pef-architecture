@@ -1,5 +1,9 @@
 # PEF Architecture
 
+![PEF Architecture CI](https://github.com/banbanry/pef-architecture/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Code Reference](https://img.shields.io/badge/code-pef--core--reference-green.svg)
+
 > **Anchored Determinism: only the anchor produces the potential difference.**
 
 ---

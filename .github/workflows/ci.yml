@@ -1,0 +1,88 @@
+name: PEF Architecture CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  demo-self-check:
+    name: Demo Self-Check (8/8 PASS)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run demo_minimal.py
+        run: |
+          python demo_minimal.py
+          echo "Exit code: $?"
+
+      - name: Verify 8/8 PASS
+        run: |
+          OUTPUT=$(python demo_minimal.py 2>&1)
+          echo "$OUTPUT"
+          if echo "$OUTPUT" | grep -q "SELF-CHECK: 8/8 PASS"; then
+            echo "✅ Self-check passed: 8/8 PASS"
+          else
+            echo "❌ Self-check failed"
+            exit 1
+          fi
+
+  markdown-lint:
+    name: Markdown Structure Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required files exist
+        run: |
+          REQUIRED=(
+            "README.md"
+            "axioms.md"
+            "primitives.md"
+            "pi-anchor.md"
+            "mod3.md"
+            "topology.md"
+            "demo_minimal.py"
+            "LICENSE"
+            "01-core-spec/README.md"
+            "01-core-spec/pef-7.6-pro-design-spec.md"
+            "02-applications/README.md"
+            "03-operator-library/README.md"
+            "04-engineering-cases/README.md"
+            "05-references/README.md"
+          )
+          MISSING=0
+          for f in "${REQUIRED[@]}"; do
+            if [ -f "$f" ]; then
+              echo "✅ $f"
+            else
+              echo "❌ MISSING: $f"
+              MISSING=1
+            fi
+          done
+          if [ $MISSING -eq 1 ]; then
+            echo "Some required files are missing"
+            exit 1
+          fi
+
+      - name: Verify source watermark in all docs
+        run: |
+          FILES=$(find . -name "*.md" -not -path "./.git/*")
+          MISSING=0
+          for f in $FILES; do
+            if grep -q "github.com/banbanry/pef-architecture" "$f"; then
+              echo "✅ $f (watermarked)"
+            else
+              echo "⚠️  $f (no source watermark)"
+            fi
+          done
+          echo "Watermark check complete (warnings only, not blocking)"
