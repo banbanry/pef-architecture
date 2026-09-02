@@ -450,18 +450,48 @@ PEF does not invent new algorithms, new mathematical formalisms, or new control 
 
 ```
 pef-architecture/
-├── README.md          # Meta-architecture, two systems, boundary map, non-obviousness, code
-├── LICENSE            # MIT License
-├── demo_minimal.py    # 30-second verifiable demo (extracted from production PEF_Core)
-├── PEF-Gate-Hardware-Veto-White-Paper-Public.pdf  # Physical PEF instantiation (desensitized)
-├── axioms.md          # Software axiom system (A1–A8)
-├── primitives.md      # Software P·E·F detailed definitions
+├── README.md                              # Meta-architecture, two systems, boundary map, non-obviousness
+├── LICENSE                                # MIT License
+├── demo_minimal.py                        # 30-second verifiable demo (extracted from production)
+├── PEF-Gate-Hardware-Veto-White-Paper-Public.pdf  # Physical PEF instantiation
+│
+├── axioms.md          # ← Entry-level summaries (read first)
+├── primitives.md      # Software P·E·F definitions
 ├── pi-anchor.md       # The π-anchor coordinate system
-├── mod3.md            # Three-state interrogation (software)
-└── topology.md        # Five-layer pipeline topology (software)
+├── mod3.md            # Three-state interrogation
+├── topology.md        # Five-layer pipeline topology
+│
+├── 01-core-spec/                        # ← Complete design specification (deep dive)
+│   ├── README.md                         # Layer navigation
+│   ├── pef-7.6-pro-design-spec.md       # PEF 7.6 Pro complete design spec (~88K chars)
+│   └── time-theory-appendix.md           # Dual-axis time theory
+│
+├── 02-applications/                     # ← π-anchor application extensions
+│   ├── README.md                         # Application谱系 (π 1st/2nd/3rd/4th applications)
+│   ├── cic-cross-model-governance.md     # π 3rd app: CIC cross-model code governance
+│   └── pimem-genetic-memory.md           # π 4th app: PIMEM π-genetic chain memory
+│
+├── 03-operator-library/                 # ← PEF triad operator library
+│   ├── README.md
+│   ├── operator-library-core.md           # Complete operator classification
+│   ├── operator-library-v3-800.md         # 800 new operators (1600–2026 span)
+│   └── operator-library-3.8-probe.md      # CLE 3.8 probe system adaptation
+│
+├── 04-engineering-cases/                # ← Real-world engineering deployments
+│   ├── README.md
+│   └── cle-probe/
+│       ├── README.md
+│       ├── cle-l1-l3-technical.md         # CLE V3.8.2 L1-L3 three-layer technical doc
+│       ├── cle-systematic-integration.md   # Systematic integration & deployment guide
+│       └── cle-five-stage-workflow.md      # Five-stage complete workflow
+│
+└── 05-references/                       # ← External reference & industry analysis
+    ├── README.md
+    ├── ai-programming-trio.md             # AI programming trio architecture comparison
+    └── multimodal-hallucination-report.md # Multimodal LLM hallucination breakthrough report
 ```
 
-> This repository is the **public theory layer**: meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, mechanism concepts, a 30-second verifiable demo, and signature code extracted from production. The six `.md` files (`axioms`, `primitives`, `pi-anchor`, `mod3`, `topology`) are **theoretical summaries** — the complete design specification, formal proofs, and full derivation are in the **PEF Gate Hardware Veto White Paper** (PDF, included in this repository) and the **pef-core-reference** code repository. The physical PEF (thermodynamics-anchored) system is documented in separate hardware specifications. The boundary map above defines what belongs where.
+> This repository is the **public theory layer**: meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, mechanism concepts, a 30-second verifiable demo, and signature code extracted from production. The five root-level `.md` files (`axioms`, `primitives`, `pi-anchor`, `mod3`, `topology`) are **entry-level theoretical summaries**. The complete design specification, formal proofs, operator library, application extensions, and engineering case studies are in the numbered directories (`01-core-spec/` through `05-references/`). Read the summaries first, then dive into the numbered directories by interest. The physical PEF (thermodynamics-anchored) system is documented in the Hardware Veto White Paper (PDF). The code reference implementation is in the separate **pef-core-reference** repository.
 
 ## Public Boundary
 
@@ -471,11 +501,27 @@ It does **not** contain: implementation code, circuit schematics, parameter thre
 
 ## Reading Path
 
+### 5-Minute Entry (read these first)
+
 1. **This README** — the hook, the core principle, the non-obviousness argument, the two systems
-2. **axioms.md** — the software axiom system that enforces determinism
-3. **pi-anchor.md** — how the π-anchor produces an unforgeable coordinate
+2. **primitives.md** — Software P·E·F triad definitions (who acts, what variables, what result)
+3. **pi-anchor.md** — how the π-anchor produces an unforgeable coordinate axis
 4. **mod3.md** — how three-state interrogation reveals hidden fragility
 5. **topology.md** — how the software triad assembles into a five-layer pipeline
+6. **axioms.md** — the eight axioms that enforce determinism (A1–A8)
+
+### 30-Minute Deep Dive
+
+7. **01-core-spec/pef-7.6-pro-design-spec.md** — the complete PEF 7.6 Pro design specification
+8. **demo_minimal.py** — run the 30-second verifiable demo (`python demo_minimal.py`, expect 8/8 PASS)
+
+### Explore by Interest
+
+- **π-anchor applications** → `02-applications/` (CIC cross-model governance, PIMEM genetic memory)
+- **Operator library** → `03-operator-library/` (complete classification, 800+ operators, engineering adaptation)
+- **Engineering cases** → `04-engineering-cases/cle-probe/` (CLE V3.8.2 deterministic code probe system)
+- **Industry context** → `05-references/` (AI programming trio, multimodal hallucination report)
+- **Code reference** → [pef-core-reference](https://github.com/banbanry/pef-core-reference) (19 modules, 2200+ lines, A/B evaluation)
 
 ---
 
