@@ -493,6 +493,11 @@ pef-architecture/
     ├── README.md
     ├── ai-programming-trio.md             # AI programming trio architecture comparison
     └── multimodal-hallucination-report.md # Multimodal LLM hallucination breakthrough report
+
+docs/
+├── promotion-article-zh.md              # Chinese narrative: "I use π as an anchor"
+├── knowledge-base-guide.zh.md           # 中文：知识库导读与同步映射
+└── knowledge-base-guide.en.md           # English: Knowledge base guide & sync mapping
 ```
 
 > This repository is the **public theory layer**: meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, mechanism concepts, a 30-second verifiable demo, and signature code extracted from production. The five root-level `.md` files (`axioms`, `primitives`, `pi-anchor`, `mod3`, `topology`) are **entry-level theoretical summaries**. The complete design specification, formal proofs, operator library, application extensions, and engineering case studies are in the numbered directories (`01-core-spec/` through `05-references/`). Read the summaries first, then dive into the numbered directories by interest. The physical PEF (thermodynamics-anchored) system is documented in the Hardware Veto White Paper (PDF). The code reference implementation is in the separate **pef-core-reference** repository.
@@ -526,6 +531,7 @@ It does **not** contain: implementation code, circuit schematics, parameter thre
 - **Engineering cases** → `04-engineering-cases/cle-probe/` (CLE V3.8.2 deterministic code probe system)
 - **Industry context** → `05-references/` (AI programming trio, multimodal hallucination report)
 - **Code reference** → [pef-core-reference](https://github.com/banbanry/pef-core-reference) (19 modules, 2200+ lines, A/B evaluation)
+- **Knowledge base guide (双语导读)** → [中文](docs/knowledge-base-guide.zh.md) / [English](docs/knowledge-base-guide.en.md) — repository guide & Feishu knowledge base sync mapping
 
 ---
 
