@@ -13,6 +13,7 @@
 |------|------|------|
 | [pef-7.6-pro-design-spec.md](pef-7.6-pro-design-spec.md) | **PEF 7.6 Pro 完整设计规范** — 物理铁律 × π标记坐标系 × 原文坐标锚定 × 种子-树生命体架构。π域（物理实体记忆）/ √2域（算力熔断区）/ π-Mod3相位调度。这是 PEF 架构最完整的设计文档。 | ~88K 字符 |
 | [time-theory-appendix.md](time-theory-appendix.md) | **时间理论附录** — 双轴时间定义、反方攻防推演。工程控制平面定位，不涉及物理/哲学/量子层。 | ~3K 字符 |
+| [pef-three-tier-closed-loop-engine.md](pef-three-tier-closed-loop-engine.md) | **PEF 三级闭环引擎** — 内生循环(token深挖) × 外部校准(多模型偏差) × 多模型编译对齐(统一Schema)。可执行认知引擎：切块打分→分级→低置信升级→多模型裁决→对齐比对→π锚审计。含完整伪代码与验收标准。 | ~11K 字符 |
 
 ## 阅读顺序
 
