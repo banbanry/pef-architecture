@@ -3,7 +3,7 @@
 > **License**: MIT
 > **PEF Architecture**: Anchored Determinism Meta-Architecture — 唯锚才有势差产生
 > **文档版本**: PEF-CL V1.0 (2026-09-05)
-> **状态**: 正式发布 · 可执行设计
+> **状态**: 正式发布 · 可执行设计 · **Tier2/3 已实现（pef_cl_engine.py / pef_cl_e2e.py）**
 
 # PEF 三级闭环引擎设计规范
 
@@ -324,6 +324,20 @@ pef-cli align --verdicts <verdicts.json> [--threshold 0.15]
 # 审计查询
 pef-cli audit --ledger <ledger.db> --block <block_hash>
 ```
+
+### 7.1b 已实现代码（V1.0 落地）
+
+| 文件 | 内容 | 运行 |
+|---|---|---|
+| `pef_cl_engine.py` | Tier2 探针前置(12算子) + 多模型裁决(mock/真实API钩子) + Tier3 统一Schema编译 + ρ计算 + StateLedger π锚审计账本 | `python pef_cl_engine.py`（离线演示3场景+篡改检测） |
+| `pef_cl_e2e.py` | 端到端串联：读取 tier1 中间结果 → 低置信块升级 → Tier2+3 校准 → 审计账本 | `python pef_cl_e2e.py`（真实142份语料） |
+| `pef_loop_miner.py` | Tier1 内生循环（在仓库外，实现参考） | 见历史提交 |
+
+**端到端实测（灰烬区 142 份文档）**：
+- 低置信（A级）8 块 → **全部 FAIL**（ρ=0.57~0.87，多模型分歧熔断）
+- 高置信（S级）8 块 → **全部 PASS**（ρ=0.02，三模型一致）
+- 审计账本 16 条，哈希链完整性验证通过
+- 裁决逻辑修正：**一致意见优先**（三模型一致 FAIL 时即使 ρ 低也判 FAIL，ρ 仅在分歧时介入）
 
 ### 7.2 自检清单（SELF-CHECK）
 
