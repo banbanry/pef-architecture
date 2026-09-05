@@ -1,0 +1,29 @@
+﻿═══ PEF-7.7 Pro 审计报告 ═══
+输入: byzantine_sample.txt
+总量: 1799 字符 | 分片: 1 × 3000
+含污点分片: 1/1 | C层FAIL分片: 1/1
+
+污点类型                           分片数  含义
+------------------------------------------------------------------------------
+BYZ_ANCHOR_MISS                  1  █ 论断无 [Origin: offset] 锚点 (A2公理违反)
+BYZ_TYPE_OTHER                   0   实体分类为 OTHER (L1_type_valid 失败)
+BYZ_CONTRADICTION                1  █ 同一实体数值冲突 (L4_no_contradiction 失败)
+BYZ_TIME_INVERSION               1  █ 时间戳逆序 (A4 时序因果违反, 倒果为因)
+BYZ_ENTROPY_LOW                  0   熵不足: 压缩性灌水/敷衍 (熵代价盾牌触发)
+BYZ_UNRESOLVED                   0   UNRESOLVED 悬而未决 (L3_solve_complete 失败)
+BYZ_UNREGISTERED_VAR             0   引用未注册变量 (π坐标系外 var_id)
+BYZ_PI_FORGE                     1  █ 自算/伪造 π 数位 (与预置表不符)
+BYZ_DUPLICATE                    1  █ 重复内容指纹 (防AI屎山/数据污染)
+BYZ_PHASE_JUMP                   0   洋葱跳层 (L 层递进顺序违反)
+BYZ_GREY_UNCERTAINTY             1  █ 灰色地带未解决 (Grey_Query 后仍 UNCERTAINTY)
+BYZ_NO_FALSIFICATION             0   R_forced=2 时无毁灭性证伪 (反例缺失)
+------------------------------------------------------------------------------
+合计                               6
+
+═══ 污点详细清单 (前 60 条) ═══
+  [chunk=0(Phase P)] BYZ_TIME_INVERSION: ['timestamp_after > timestamp_', '时序颠倒']
+  [chunk=0(Phase P)] BYZ_PI_FORGE: ['3141592653589793238462643383279502884197169']
+  [chunk=0(Phase P)] BYZ_GREY_UNCERTAINTY: ['GREY_UNCERTAINTY']
+  [chunk=0(Phase P)] BYZ_ANCHOR_MISS: ['结论: 系统整体性能达标，无需优化']
+  [chunk=0(Phase P)] BYZ_DUPLICATE: ['相邻重复行@10-11: 重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复', '重复行重复行重复行重复
+  [chunk=0(Phase P)] BYZ_CONTRADICTION: ['的指标:0↔3', '的指标:0↔6', '的指标:0↔9', '的指标:0↔12', '的指标:0↔15', '的指标:0↔18', '的指标:0↔21'

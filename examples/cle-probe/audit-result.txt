@@ -1,0 +1,43 @@
+﻿{
+  "version": "CLE V3.8.2",
+  "filename": "vuln_sample.c",
+  "verdict": "FAIL",
+  "p0_count": 1,
+  "p1_count": 1,
+  "findings": [
+    {
+      "event_id": "DIV_ZERO_10",
+      "line": 10,
+      "severity": "P0",
+      "category": "STATE_BOUNDEDNESS",
+      "description": "除法运算未检查除数为零",
+      "causal_chain": "P[div] -> E[no zero check] -> F[div by zero]"
+    },
+    {
+      "event_id": "BUF_UNSAFE_11",
+      "line": 11,
+      "severity": "P1",
+      "category": "BUFFER_OVERFLOW",
+      "description": "sprintf无边界限制: sprintf(buf, \"data: %s\", input);     /* P1: sprintf 无边界 */",
+      "suggestion": "使用strncpy/snprintf等安全版本"
+    }
+  ],
+  "source_hash": "6f77d88ce85f6ec2fdabe24376b679ce",
+  "pi_step": 1,
+  "pi_digit": 2,
+  "state_vector": {
+    "S1_parsability": 1.0,
+    "S2_graph_integrity": 1.0,
+    "S3_confidence": 0.3,
+    "S4_deviation_rate": 0.0,
+    "S5_byzantine_risk": 0.0,
+    "S6_pi_coverage": 0.01,
+    "S7_ast_coverage": 0.8,
+    "_pending": [
+      "S3需DS融合(M5-1)",
+      "S5需拜占庭(M8-1)",
+      "S7需AST解析(M9-2)"
+    ]
+  },
+  "hash_self": "3bf9840fdbb3f4142526e63b044f8631"
+}

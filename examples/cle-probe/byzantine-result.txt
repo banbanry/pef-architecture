@@ -1,0 +1,20 @@
+﻿    {
+      "id": 9,
+      "name": "空输入绕过(Gate0)",
+      "passed": true,
+      "detail": "6种空输入全部GAMMA=True"
+    },
+    {
+      "id": 10,
+      "name": "π耗尽(cache=10)",
+      "passed": true,
+      "detail": "第11步返回-1=True is_exhausted=True"
+    },
+    {
+      "id": 11,
+      "name": "MAX_LINE=0安全降级",
+      "passed": true,
+      "detail": "MAX_LINE=0 安全降级=True"
+    }
+  ]
+}

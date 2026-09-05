@@ -30,7 +30,6 @@
 | **03-operator-library（算子库）** | P/E/F/M 四层算子 | [800算子库](../03-operator-library/operator-library-v3-800.md) · [CLE探针算子](../03-operator-library/operator-library-3.8-probe.md) |
 | **04-engineering-cases（工程案例）** | CLE 探针落地 | [五阶段工作流](../04-engineering-cases/cle-probe/cle-five-stage-workflow.md) · [L1-L3技术](../04-engineering-cases/cle-probe/cle-l1-l3-technical.md) |
 | **05-references（参考）** | 外部验证 | [AI编程三剑客](../05-references/ai-programming-trio.md) · [多模态幻觉报告](../05-references/multimodal-hallucination-report.md) |
-| **硬件白皮书** | 物理实例化 | [PEF-Gate 硬件否决白皮书](../PEF-Gate-Hardware-Veto-White-Paper-Public.pdf) |
 | **推广文章** | 中文叙事 | [我用π做锚 — AI 可审计代码架构实验](../docs/promotion-article-zh.md) |
 
 ---
@@ -70,7 +69,6 @@ python 01-core-spec/pef_cl_e2e.py
 | 03-operator-library（800算子） | 01-算子定义与规范 · 800算子库4层级 |
 | 04-engineering-cases（CLE探针） | 03-测试与验证 · 08-902批次 |
 | 05-references（三剑客/幻觉报告） | 05-知识卡片库 |
-| 硬件白皮书（PEF-Gate） | 04-版本与变更 |
 
 ---
 

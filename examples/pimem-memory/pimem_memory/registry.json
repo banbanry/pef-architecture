@@ -1,0 +1,19 @@
+{
+ "π-0-3": {
+  "name": "RateLimiter",
+  "p_base": {
+   "name": "RateLimiter",
+   "type": "LOGICAL",
+   "boundary": "接收请求返回ALLOW/DENY",
+   "unit": "次/秒",
+   "def_fields": {
+    "limit": "100"
+   },
+   "state_fields": {
+    "current": "0"
+   }
+  },
+  "d_base": "fa29bbd41628c0b9cf44a6468218650d34b9fb80c88220421a28df286d9ee563",
+  "created": "2026-09-05T14:05:03"
+ }
+}

@@ -12,7 +12,7 @@
 | 应用 | 文档 | 核心命题 |
 |------|------|----------|
 | π 第一应用 | 根目录 pi-anchor.md | 软件 PEF 基础锚定 — 代码实体锚定到 π 超越数坐标轴 |
-| π 第二应用 | 硬件白皮书 PDF | 物理 PEF — 热力学定律做锚，硬件否决层 |
+| π 第二应用 | 硬件否决层（设计） | 物理 PEF 实例化——**专利保护中，不上公开** |
 | **π 第三应用** | [cic-cross-model-governance.md](cic-cross-model-governance.md) | **PEF-CIC 跨模型代码协作治理** — 多模型方言偏差治理，方言偏差 = 空间化的公理漂移 |
 | **π 第四应用** | [pimem-genetic-memory.md](pimem-genetic-memory.md) | **PIMEM π基因链记忆仓库** — 用 π 位序列作为基因编码，构建可演化的记忆系统 |
 

@@ -1,0 +1,24 @@
+{
+ "entries": [
+  {
+   "seq": 0,
+   "event": "GENESIS",
+   "anchor": "π-0-3",
+   "d_base": "fa29bbd41628c0b9cf44a6468218650d34b9fb80c88220421a28df286d9ee563",
+   "prev_hash": "GENESIS",
+   "t": "2026-09-05T14:05:03",
+   "hash": "86316f325677a27047a64edad2cb0afce8b4fcf6f1d8bcabb511b10015761f75"
+  },
+  {
+   "seq": 1,
+   "delta_v": "rate=120",
+   "judgment": "FAIL",
+   "rho": 0.7,
+   "mod3": 2,
+   "anchor": "π-0-3",
+   "prev_hash": "86316f325677a27047a64edad2cb0afce8b4fcf6f1d8bcabb511b10015761f75",
+   "t": "2026-09-05T14:05:03",
+   "hash": "a95696521274adf17c61b11e73f2c0b27972218e1e687ccbb36f22058e2166f2"
+  }
+ ]
+}

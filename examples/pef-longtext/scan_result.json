@@ -1,0 +1,83 @@
+{
+ "meta": {
+  "input": "byzantine_sample.txt",
+  "total_chars": 1799,
+  "chunk_size": 3000,
+  "chunks": 1,
+  "ts": "2026-09-05T14:05:30"
+ },
+ "results": [
+  {
+   "seq": 0,
+   "phase": "P",
+   "phase_desc": "探索生发态: 激活P层算子(GP/符号回归)",
+   "chunk_len": 1799,
+   "entities": 35,
+   "byzantine_hits": {
+    "BYZ_TIME_INVERSION": [
+     "timestamp_after > timestamp_",
+     "时序颠倒"
+    ],
+    "BYZ_PI_FORGE": [
+     "3141592653589793238462643383279502884197169"
+    ],
+    "BYZ_GREY_UNCERTAINTY": [
+     "GREY_UNCERTAINTY"
+    ],
+    "BYZ_ANCHOR_MISS": [
+     "结论: 系统整体性能达标，无需优化"
+    ],
+    "BYZ_DUPLICATE": [
+     "相邻重复行@10-11: 重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复",
+     "重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行重复行"
+    ],
+    "BYZ_CONTRADICTION": [
+     "的指标:0↔3",
+     "的指标:0↔6",
+     "的指标:0↔9",
+     "的指标:0↔12",
+     "的指标:0↔15",
+     "的指标:0↔18",
+     "的指标:0↔21",
+     "的指标:0↔24",
+     "的指标:0↔27",
+     "的指标:0↔30",
+     "的指标:0↔33",
+     "的指标:0↔36",
+     "的指标:0↔39",
+     "的指标:0↔42",
+     "的指标:0↔45",
+     "的指标:0↔48",
+     "的指标:0↔51",
+     "的指标:0↔54",
+     "的指标:0↔57",
+     "的指标:0↔60",
+     "的指标:0↔63",
+     "的指标:0↔66",
+     "的指标:0↔69",
+     "的指标:0↔72",
+     "的指标:0↔75",
+     "的指标:0↔78",
+     "的指标:0↔81",
+     "的指标:0↔84",
+     "的指标:0↔87"
+    ]
+   },
+   "c_checks": {
+    "L1_entity_count": true,
+    "L1_origin_anchored": true,
+    "L1_type_valid": true,
+    "L2_critic_count": false,
+    "L2_origin_anchored": true,
+    "L2_entropy_sufficient": true,
+    "L3_solve_complete": true,
+    "L3_topology_covered": false,
+    "L4_no_contradiction": false,
+    "L4_falsification_done": true,
+    "C_PASS": false
+   },
+   "ts": "20260905140530",
+   "hash": "10b5eef1420f5189910a86e78f22436f2e04d92e528ba90e621d04ea753c6d42"
+  }
+ ]
+}

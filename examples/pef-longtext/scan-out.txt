@@ -1,0 +1,8 @@
+﻿═══ PEF-7.7 Pro 长文本遍历审计 ═══
+输入: byzantine_sample.txt
+总量: 1799 字符 | 分片: 1 × 3000 | 相位: π-Mod3(P/E/F)
+模式: 标准
+
+[   0] ✗ Phase=P 实体=35 污点= 6 C层=FAIL
+
+扫描结果已存: .\scan_result.json

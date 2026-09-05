@@ -1,0 +1,412 @@
+{
+ "paper": "https://arxiv.org/abs/2608.20427",
+ "models": [
+  {
+   "tag": "qwen",
+   "name": "千问 qwen3.8-max",
+   "model": "qwen3.8-max",
+   "status": "skipped"
+  },
+  {
+   "tag": "mimo",
+   "name": "小米 MiMo v2.5-pro",
+   "model": "mimo-v2.5-pro",
+   "status": "skipped"
+  },
+  {
+   "tag": "glm",
+   "name": "智谱 GLM-4.7-Flash",
+   "model": "glm-4.7-flash",
+   "status": "error",
+   "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+   "tag": "doubao",
+   "name": "豆包 Doubao-Seed",
+   "model": "doubao-seed-2-1-pro-260708",
+   "status": "skipped"
+  },
+  {
+   "tag": "kimi",
+   "name": "月之暗面 Kimi K2.5",
+   "model": "kimi-k2.5",
+   "status": "skipped"
+  },
+  {
+   "tag": "ds_chat",
+   "name": "DeepSeek-V3 (chat)",
+   "model": "deepseek-chat",
+   "status": "ok",
+   "text_len": 1472
+  },
+  {
+   "tag": "ds_r1",
+   "name": "DeepSeek-R1 (推理)",
+   "model": "deepseek-reasoner",
+   "status": "ok",
+   "text_len": 1104
+  },
+  {
+   "tag": "or_qwen",
+   "name": "OR: Qwen3-Coder",
+   "model": "qwen/qwen3-coder-480b",
+   "status": "skipped"
+  },
+  {
+   "tag": "or_glm",
+   "name": "OR: GLM-4.7",
+   "model": "z-ai/glm-4.7",
+   "status": "skipped"
+  },
+  {
+   "tag": "or_ds",
+   "name": "OR: DeepSeek-R1",
+   "model": "deepseek/deepseek-r1",
+   "status": "skipped"
+  },
+  {
+   "tag": "or_llama",
+   "name": "OR: Llama-4",
+   "model": "meta-llama/llama-4-scout",
+   "status": "skipped"
+  },
+  {
+   "tag": "or_gpt",
+   "name": "OR: GPT-4o-mini",
+   "model": "openai/gpt-4o-mini",
+   "status": "skipped"
+  },
+  {
+   "tag": "sf_qwen",
+   "name": "千问系 Qwen3.5-27B",
+   "model": "Qwen/Qwen3.5-27B",
+   "status": "error",
+   "error": "HTTP Error 402: Payment Required"
+  },
+  {
+   "tag": "sf_glm",
+   "name": "智谱 GLM-5.3",
+   "model": "zai-org/GLM-5.3",
+   "status": "error",
+   "error": "HTTP Error 402: Payment Required"
+  },
+  {
+   "tag": "sf_ds",
+   "name": "DeepSeek-V3",
+   "model": "deepseek-ai/DeepSeek-V3",
+   "status": "error",
+   "error": "HTTP Error 402: Payment Required"
+  },
+  {
+   "tag": "sf_kimi",
+   "name": "月之暗面 Kimi-K2.7-Code",
+   "model": "moonshotai/Kimi-K2.7-Code",
+   "status": "error",
+   "error": "HTTP Error 402: Payment Required"
+  },
+  {
+   "tag": "sf_seed",
+   "name": "字节系 Seed-OSS-36B",
+   "model": "ByteDance-Seed/Seed-OSS-36B-Instruct",
+   "status": "error",
+   "error": "HTTP Error 402: Payment Required"
+  }
+ ],
+ "compiled": [
+  {
+   "tag": "ds_chat",
+   "compiled": {
+    "compiled": {
+     "schema": "pef-mmc-1.0",
+     "source_model": "openai",
+     "pi_anchor": "π-100-9",
+     "seq": 100,
+     "claims": [
+      {
+       "text": "\"subject\": \"BF1，一种确定性的块对齐二进稀疏注意力路径，结合局部邻域、全局首块和对数间隔历史块，用于高效长上下文Transformer。",
+       "assertion_level": "FACT",
+       "origin_offset": 4
+      },
+      {
+       "text": "\"variables\": [",
+       "assertion_level": "FACT",
+       "origin_offset": 84
+      },
+      {
+       "text": "\"name\": \"块宽度\",",
+       "assertion_level": "FACT",
+       "origin_offset": 111
+      },
+      {
+       "text": "\"kind\": \"E_in\",",
+       "assertion_level": "FACT",
+       "origin_offset": 132
+      },
+      {
+       "text": "\"value\": \"固定\"",
+       "assertion_level": "FACT",
+       "origin_offset": 154
+      },
+      {
+       "text": "\"name\": \"每层token交互数\",",
+       "assertion_level": "FACT",
+       "origin_offset": 187
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"O(n log n)\"",
+       "assertion_level": "FACT",
+       "origin_offset": 238
+      },
+      {
+       "text": "\"name\": \"图通信深度\",",
+       "assertion_level": "FACT",
+       "origin_offset": 279
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"O(log n)\"",
+       "assertion_level": "FACT",
+       "origin_offset": 325
+      },
+      {
+       "text": "\"name\": \"预填充加速比（32K）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 364
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"10.91x\"",
+       "assertion_level": "FACT",
+       "origin_offset": 416
+      },
+      {
+       "text": "\"name\": \"TTFT降低（8K,16K,32K）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 453
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"7.7%, 11.3%, 15.3%\"",
+       "assertion_level": "FACT",
+       "origin_offset": 512
+      },
+      {
+       "text": "\"name\": \"报告困惑度（BF1）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 561
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"1.68639\"",
+       "assertion_level": "FACT",
+       "origin_offset": 612
+      },
+      {
+       "text": "\"name\": \"报告困惑度（静态随机非局部图）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 650
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"1.69154\"",
+       "assertion_level": "FACT",
+       "origin_offset": 706
+      },
+      {
+       "text": "\"name\": \"报告困惑度（密集继续训练）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 744
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"1.69258\"",
+       "assertion_level": "FACT",
+       "origin_offset": 798
+      },
+      {
+       "text": "\"name\": \"报告困惑度（等预算局部滑动）\",",
+       "assertion_level": "FACT",
+       "origin_offset": 836
+      },
+      {
+       "text": "\"kind\": \"E_out\",",
+       "assertion_level": "FACT",
+       "origin_offset": 215
+      },
+      {
+       "text": "\"value\": \"1.81505\"",
+       "assertion_level": "FACT",
+       "origin_offset": 891
+      },
+      {
+       "text": "\"results\": [",
+       "assertion_level": "FACT",
+       "origin_offset": 923
+      }
+     ],
+     "variables": [
+      {
+       "name": "平均报告困惑度",
+       "kind": "E_in"
+      }
+     ],
+     "terms_normalized": {
+      "variable": "variable",
+      "result": "result"
+     }
+    },
+    "dialect": {
+     "matched": "openai",
+     "paths_tried": [
+      [
+       "choices",
+       0,
+       "message",
+       "content"
+      ],
+      [
+       "choices",
+       0,
+       "text"
+      ],
+      [
+       "choices",
+       0,
+       "message",
+       "reasoning_content"
+      ]
+     ]
+    },
+    "audit": {
+     "rho_dialect_deviation": 0.8571,
+     "unmapped_fields": [
+      "id",
+      "object",
+      "created",
+      "model",
+      "usage",
+      "system_fingerprint"
+     ],
+     "hash": "5e322669dc0a3e58a4447524051ebc0a5b8f3095ea646e5e502cffd0976bdb79",
+     "ts": "2026-09-05T11:22:07"
+    }
+   }
+  },
+  {
+   "tag": "ds_r1",
+   "compiled": {
+    "compiled": {
+     "schema": "pef-mmc-1.0",
+     "source_model": "openai",
+     "pi_anchor": "π-101-8",
+     "seq": 101,
+     "claims": [
+      {
+       "text": "{\"subject\": \"BF1：一种将因果稠密注意力改造为分块对齐的二元稀疏注意力路径，用于高效长上下文Transformer的方法\", \"variables\": [{\"name\": \"Sequence length\", \"kind\": ",
+       "assertion_level": "FACT",
+       "origin_offset": 0
+      },
+      {
+       "text": "\", \"在NVIDIA RTX PRO 6000 Blackwell GPU上，优化的BF16 BF1实现越过稠密注意力的交叉点在2K到4K token之间，并在32K时达到10.91x的逐层prefill加速。",
+       "assertion_level": "FACT",
+       "origin_offset": 588
+      },
+      {
+       "text": "\", \"将Qwen3-0.6B的28层中8层改造为BF1后，在8K、16K和32K下分别降低7.7%、11.3%和15.3%的warm whole-model time-to-first token，同时剩余稠密层使整个模型保持渐近二次复杂",
+       "assertion_level": "FACT",
+       "origin_offset": 694
+      },
+      {
+       "text": "\", \"在匹配的1000步、16.384M token适配协议下，BF1在三个训练种子中排名第一：平均报告困惑度为1.68639，优于静态随机非局部图的1.69154、稠密继续训练的1.69258和等预算局部滑动的1.81505。",
+       "assertion_level": "FACT",
+       "origin_offset": 816
+      },
+      {
+       "text": "\", \"BF1被验证为一种可复现的稀疏算子和选择性改造原语，在真实长上下文系统中有实际价值。",
+       "assertion_level": "FACT",
+       "origin_offset": 931
+      },
+      {
+       "text": "\"], \"terms\": [\"dyadic sparse attention\", \"causal attention\", \"log-sparse attention\", \"retrofit\", \"time-to-first token (T",
+       "assertion_level": "FACT",
+       "origin_offset": 977
+      }
+     ],
+     "variables": [
+      {
+       "name": "平均报告困惑度",
+       "kind": "E_in"
+      }
+     ],
+     "terms_normalized": {
+      "variable": "variable"
+     }
+    },
+    "dialect": {
+     "matched": "openai",
+     "paths_tried": [
+      [
+       "choices",
+       0,
+       "message",
+       "content"
+      ],
+      [
+       "choices",
+       0,
+       "text"
+      ],
+      [
+       "choices",
+       0,
+       "message",
+       "reasoning_content"
+      ]
+     ]
+    },
+    "audit": {
+     "rho_dialect_deviation": 0.8571,
+     "unmapped_fields": [
+      "id",
+      "object",
+      "created",
+      "model",
+      "usage",
+      "system_fingerprint"
+     ],
+     "hash": "c3fc7e8e756e41aa65b8a77f4f3abb66044887d2557a9ac59d289eae6263323c",
+     "ts": "2026-09-05T11:22:07"
+    }
+   }
+  }
+ ]
+}

@@ -30,7 +30,6 @@ This page is a **theory guide** to the public PEF architecture repository, mirro
 | **03-operator-library** | P/E/F/M four-layer operators | [800-operator library](../03-operator-library/operator-library-v3-800.md) · [CLE probe operators](../03-operator-library/operator-library-3.8-probe.md) |
 | **04-engineering-cases** | CLE probe deployment | [Five-stage workflow](../04-engineering-cases/cle-probe/cle-five-stage-workflow.md) · [L1-L3 technical](../04-engineering-cases/cle-probe/cle-l1-l3-technical.md) |
 | **05-references** | External validation | [AI programming trio](../05-references/ai-programming-trio.md) · [Multimodal hallucination report](../05-references/multimodal-hallucination-report.md) |
-| **Hardware whitepaper** | Physical instantiation | [PEF-Gate Hardware Veto White Paper](../PEF-Gate-Hardware-Veto-White-Paper-Public.pdf) |
 | **Promotion article** | Chinese narrative | [I use π as an anchor](../docs/promotion-article-zh.md) |
 
 ---

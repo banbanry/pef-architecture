@@ -1,161 +1,111 @@
 # PEF Architecture
 
-![PEF Architecture CI](https://github.com/banbanry/pef-architecture/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Code Reference](https://img.shields.io/badge/code-pef--core--reference-green.svg)
 
-> **Anchored Determinism: only the anchor produces the potential difference.**
-
----
-
-## 前言：你的验证层建在可伪造的基础上
-
-你的审计日志记录了每个操作的时间戳——但如果 AI 可以修改系统时钟呢？
-你的变量声明了类型和作用域——但如果变量的值是凭空构造、无法追溯来源的呢？
-你的测试通过了所有用例——但如果测试所依赖的坐标本身就是可伪造的呢？
-
-**现有验证体系的根本缺陷不是验证不够严格，而是验证所依赖的基础——坐标、变量来源、时序——本身是可伪造的。** 在可伪造的基础上建再多验证层都是沙上城堡：AI 可以回退时钟、可以伪造身份、可以把不可控变量当作可控变量来"优化"、可以在事故后篡改日志。每一层防御都假设底层坐标是诚实的，但底层坐标恰恰是最不诚实的。
-
-PEF 从第一性原理解决这个问题：**唯锚才有势差产生。**
-
-锚是不可伪造、不可回退、全局唯一的基础——在软件中是超越数 π，在物理中是热力学定律。锚产生势差，势差驱动变量，变量作用于主体产生结果。每一步演化都可追溯到锚，因此不可伪造。这不是又一个验证框架——这是一个元架构模式：同一个"锚→势差→三元"模式同时实例化在软件和物理两个完全不同的领域，且约束结构同构。
-
-*继续读下去看为什么这个组合不是公知常识的重新包装。*
+> **PEF 是一套「无状态 LLM 工蜂 + 确定性 M 层内核 + 哈希链日志 + 分层门控矫正」的长文本/多 Agent 幻觉治理审计流水线。**
+> **π-锚是这套架构采用的一套时序分片标记方案**——仅用于日志标记、会话分片与防向量坍缩；架构主体可以替换该标记组件而不失效。
 
 ---
 
 ## 30-Second TL;DR
 
-| Concept | One sentence |
-|---------|-------------|
-| **Anchor** | An unforgeable, irreversible, globally-unique foundation — π in software, thermodynamic law in hardware. |
-| **Potential difference** | Produced only by the anchor. No anchor → no potential difference → no variable → no evolution. |
-| **P · E · F** | The triad operating on the potential difference: Primary Entity, Execution Variable, Final Result. |
-| **Anchored determinism** | Every variable traces to an anchor-produced potential difference; every result traces to (P, E, t) on an anchor coordinate. |
-| **Two instantiations** | Software PEF (π-anchored: five-layer pipeline + MOD3 interrogation + three-tier ledger) and Physical PEF (thermodynamics-anchored: four-domain pure-hardware veto + ZL-0 drift model). |
+| 概念 | 一句话 |
+|------|--------|
+| **问题** | LLM 在长文本/多 Agent 场景下产生实体漂移、身份幻觉、不可追溯输出——"模型说自己是对的，但无法证明输入真实性" |
+| **PEF 解法** | 让 LLM 只做"识别与提取"（无状态工蜂），把"判定与裁决"交给确定性内核（M 层），全部过程哈希链留痕、分层门控矫正 |
+| **P · E · F** | 三个不可再分的原语：P（Primary Entity，主体）/ E（Execution Variable，执行变量，E_in 可控 / E_out 不可控分流）/ F（Final Result，结果，F=f(P,E,t) 可追溯） |
+| **π-锚** | 时序/身份标记组件：提供无限展开、可复现的坐标序列，防大模型向量坍缩；**不承担密码学安全角色** |
+| **差异化** | 不提高"提取准确率"——提高的是**检测坏提取的能力**与**所有提取的可审计性** |
 
 ---
 
-## Architecture Overview
+## 架构总览：五层流水线
 
 ```mermaid
 graph TB
-    subgraph Meta["PEF Meta-Architecture: Anchor → Potential Difference → Triad"]
-        ANCHOR["Anchor Layer<br/>Unforgeable · Irreversible · Globally Unique"]
-        PD["Potential Difference<br/>Produced by anchor only"]
-        TRIAD["Triad Layer<br/>P · E · F"]
-        ANCHOR --> PD --> TRIAD
-    end
-
-    subgraph SW["Software PEF — π-Anchored"]
+    subgraph SW["PEF Software Instance — 五层审计流水线"]
         direction TB
-        SW_P["P Layer<br/>Subject definition + π-anchor binding"]
-        SW_E["E Layer<br/>Variable partition E_in / E_out"]
-        SW_F["F Layer<br/>π-anchor audit + ρ deviation rate + PASS/FAIL"]
-        SW_M["M Layer<br/>Four-stage pipeline review"]
-        SW_C["C Layer<br/>π-bit closure verification"]
+        SW_P["P 层 主体层<br/>主体定义 + π-锚绑定 + 变量声明"]
+        SW_E["E 层 执行层<br/>算子调用 + 代码生成 + E_in/E_out 分流"]
+        SW_F["F 层 裁决层<br/>π-锚审计 + 偏差率 ρ + PASS/FAIL 裁决"]
+        SW_M["M 层 元认知层<br/>四段流水线审查 + 权限隔离"]
+        SW_C["C 层 闭环层<br/>π-位数闭合验证 + 项目交付判定"]
         SW_P --> SW_E --> SW_F --> SW_M --> SW_C
-        SW_MOD3["MOD3 Three-State Interrogation<br/>Loose λ=1.0 / Medium λ=0.8 / Strict λ=0.5"]
-        SW_MOD3 -.->|"drives threshold λ"| SW_F
-        SW_LEDGER["Three-Tier Ledger<br/>Axiom readonly · Runtime read-write · Audit append-only"]
-        SW_LEDGER -.->|"anchors every state"| SW_F
+        SW_MOD3["MOD3 三态审问<br/>宽松 λ=1.0 / 中等 λ=0.8 / 严苛 λ=0.5"]
+        SW_MOD3 -.->|"驱动动态阈值"| SW_F
+        SW_LEDGER["三级账本<br/>公理只读 · 运行时读写 · 审计只追加"]
+        SW_LEDGER -.->|"锚定每个状态"| SW_F
     end
-
-    subgraph HW["Physical PEF — Thermodynamics-Anchored"]
-        direction TB
-        HW_P["P Domain · Proposal<br/>Strategy / circuit topology / code"]
-        HW_E["E Domain · Veto<br/>Destructive audit · physical deadlock detection"]
-        HW_F["F Domain · Adjudication<br/>Pure combinational logic<br/>P_OK AND E_OK → execute"]
-        HW_M["M Layer · Monitor<br/>Independent watchdog + latch + relay<br/>Cuts main power on failure"]
-        HW_P --> HW_F
-        HW_E --> HW_F
-        HW_F --> HW_M
-        HW_ZL0["ZL-0 Ground-Potential Drift Model<br/>Isomorphic to radiation threshold drift"]
-        HW_ZL0 -.->|"grounds E-domain threshold"| HW_E
-    end
-
-    ANCHOR -.->|"π — transcendental number"| SW
-    ANCHOR -.->|"thermodynamic law"| HW
 ```
+
+**数据流**：P 层（主体定义 + π 表 + 锚分配）→ E 层（算子 + 生成 + 分流）→ F 层（π 锚审计 + ρ 计算 + PASS/FAIL）→ M 层（流水线审查拦截）→ C 层（闭合环验证 + 交付判定）。层间双闸门拦截。
+
+**控制流**：MOD3 状态机驱动动态阈值 λ，λ 决定 F 层裁决严格度；影子图协议保障层间逻辑链完整性；雁阵调度协议保障多节点协作同步。
 
 ---
 
-## Real-World Deployment
+## 核心机制
 
-PEF is not just theory. The software PEF (π-anchored) system has been deployed in production:
+### 1. 无状态工蜂 + 确定性内核
 
-**Hongxin Logistics Import/Export Single-Form Processor** — a document processing pipeline for logistics customs declaration, built on the PEF architecture:
-- π-anchored state ledger with three-tier isolation (axiom / runtime / audit)
-- Four-layer onion audit (L1 constitution → L2 physics → L3 evidence → L4 byzantine)
-- 27-grid lattice state monitoring with SHA-256 causal chain
-- MOD3 three-state interrogation driving dynamic threshold λ
+LLM 工蜂**绝对无状态**，只做实体识别与不等式结构提取（原文坐标锚定）；判定逻辑全部落在 M 层确定性求解（CRITIC 不等式 + SQLite + 哈希链）。**可判定的事不交给概率模型**——这是架构的第一原则。
 
-The deployment processes real logistics documents (AWB, SI, packing lists) with anchored audit trails — every extraction, every validation, every adjudication is traceable to a π-anchor coordinate.
+### 2. MOD3 三态审问（多强度验证）
 
-### 30-second verifiable demo
+同一系统、同一偏差率，在不同审问强度下得出不同判决，揭示隐藏脆弱性：
 
-This repository contains a teaching-grade minimal demo extracted from the production code (PEF_Core). No installation, no dependencies beyond Python 3:
+| 状态 | λ | 审问强度 | 允许 | 禁止 |
+|---|---|---|---|---|
+| 0 | 1.0 | 宽松（正常运行） | 主体识别、变量拆解、方案发散 | 下最终结论、生成实现代码 |
+| 1 | 0.8 | 中等（严格校验） | 严格校验、不等式构建、约束检查 | 发散、生成新方案 |
+| 2 | 0.5 | 严苛（逃生舱） | 给出明确的 PASS/FAIL 判决 | 模糊词汇、继续发散 |
+
+### 3. 三级账本 + 哈希链审计
+
+| 层级 | 权限 | 用途 |
+|---|---|---|
+| 公理层 | 只读 | 公理定义，不可修改 |
+| 运行时层 | 读写 | 当前状态 |
+| 审计层 | 只追加 | 全部历史事件，SHA-256 哈希链，篡改任一条 → 全链断裂 |
+
+### 4. A/B 对比：PEF 的价值定位
+
+| | A 组（裸 LLM） | B 组（PEF 流水线） |
+|---|---|---|
+| 提取后 | 希望自己是对的（无法验证输入真实性） | **能证明自己是对的**（每次提取有 π 锚坐标 + 异常检测 + 哈希链审计） |
+| 异常时 | 静默出错 | CRITICAL 异常立即熔断，留痕 |
+| 审计 | 无 | 全量可追溯 |
+
+**PEF 不提高提取准确率——它提高"检测坏提取的能力"和"所有提取的可审计性"。**
+
+---
+
+## 真实部署与可验证 Demo
+
+**诚实边界声明**：软件 PEF 已完成内部业务场景原型验证（物流单证处理流水线：AWB / SI / 装箱单，三级账本 + 四层洋葱审计 + 27 格点状态监控）。**完整生产级部署材料属于私有业务资料，不在本开源仓库公开。**
+
+### 30 秒可验证 Demo
+
+本仓库包含教学级最小实现（从生产代码抽取，纯 Python 3，零依赖）：
 
 ```bash
 python demo_minimal.py
 ```
 
-**Expected output (exit code 0, last line machine-extractable):**
-```
-[场景1] 正常流程：PEFmod创建 → Πₛ分配(域匹配) → 三级登记簿record()
-  ① 创建 PEFmod: domain=P, state_hash=5505f831281b…, t_state=...
-  ② 分配 Πₛ=3, 域=P (π%3=0), t_anchor=...
-  ③ record() → status=CONFIRMED, seq=1, t_write=...
-     时序: t_state ≤ t_anchor ≤ t_write
+**预期输出（退出码 0，末行机器可提取）**：`SELF-CHECK: 8/8 PASS`
 
-[场景2] 攻击1：未锚定写入（绕过Πₛ分配直接record）
-  ✅ P0熔断: P0: Πₛ=99999 无效或未活动，禁止登记（引用未来态）
+Demo 演示：三级账本 / 锚定写入时序（t_state ≤ t_anchor ≤ t_write）/ π-Mod3 域分配 / P0 熔断（未锚定写入立即终止）/ 篡改检测（哈希不一致）/ 锚不可复用。
 
-[场景3] 攻击2：篡改审计条目（修改detail字段）
-  ✅ 哈希不一致: True（篡改被检测）
-
-[场景4] 攻击3：域不匹配（PEFmod声明P，但Πₛ域≠P）
-  ✅ 三重一致性失败: P0: 三重一致性失败 Πₛ=4 π%3=1→E, domain_tag=P
-
-[场景5] 归档后锚不可复用（铁律7）
-  归档后 is_active=False（应为False）
-
-SELF-CHECK (8 items):
-  [PASS] Πₛ合法性-运行时条目
-  [PASS] 域一致性-铁律1
-  [PASS] 一对一-Πₛ主键唯一
-  [PASS] 时序-状态≤锚≤写入
-  [PASS] 时序-写入序号单调
-  [PASS] 审计-防篡改哈希一致
-  [PASS] Π₀隔离-登记簿不承载Π₀
-  [PASS] 公理层-只读契约
-
-SELF-CHECK: 8/8 PASS
-```
-
-The demo demonstrates, in ~600 lines extracted from production code:
-- **Three-tier ledger** (axiom readonly / runtime read-write / audit append-only)
-- **Anchored write timing** (t_state ≤ t_anchor ≤ t_write, violation → P0)
-- **π-Mod3 domain assignment** (seq → π%3 → P/E/F, triple-consistency check)
-- **P0 circuit breaker** (unanchored write → immediate termination)
-- **Tamper detection** (audit event hash mismatch → detected)
-- **Anchor non-reuse** (archived Πₛ can never be reallocated, iron law 7)
-
-> *Teaching-grade minimal implementation. Production-grade 19-module kernel: [pef-core-reference](https://github.com/banbanry/pef-core-reference)*
-
-**Reference implementation (desensitized, runnable):** [pef-core-reference](https://github.com/banbanry/pef-core-reference) — the production PEF kernel extracted and desensitized: 19 modules, ~3,900 lines (π-anchor core / operator library / evidence fusion / L1–L3 pipeline / Byzantine tests / closed-loop engine), minimal demo with 8/8 self-check PASS. `pip install -r requirements.txt && python demo_minimal.py`
-
-> *[PEF Gate Hardware Veto White Paper](./PEF-Gate-Hardware-Veto-White-Paper-Public.pdf)* — the physical PEF instantiation: a four-domain pure-hardware veto layer against model deception.
+> *教学级最小实现。生产级内核（19 模块 ~3.9K 行）见独立仓库 [pef-core-reference](https://github.com/banbanry/pef-core-reference)。*
 
 ---
 
-## Signature Code
+## Signature Code（生产抽取的签名模式）
 
-These are the core implementation patterns that make PEF identifiable. They are not pseudocode — they are extracted from the production deployment.
+这些是实现模式，不是伪代码——从生产部署抽取。
 
-### 1. Anchored Write Timing (Three-Tier Ledger)
-
-Every state record must pass: π-anchor validity → domain consistency (π%3 == domain_tag) → one-to-one binding → temporal ordering (state ≤ anchor ≤ write). Any violation triggers P0 circuit breaker.
+### 1. 锚定写入时序（三级账本）
 
 ```python
 def record(self, pefmod: PEFmod, pi_s: int, metadata=None) -> Dict:
@@ -186,60 +136,24 @@ def record(self, pefmod: PEFmod, pi_s: int, metadata=None) -> Dict:
     return {'pi_s': pi_s, 'status': 'CONFIRMED'}
 ```
 
-### 2. Four-Layer Onion Audit
+### 2. 四层洋葱审计（L1 宪法 → L2 物理 → L3 证据 → L4 拜占庭 → 几何裁决）
 
-The audit engine peels four layers — each layer can trigger immediate termination (circuit breaker), and the final geometric adjudication compares deviation rate ρ against dynamic threshold λ driven by MOD3.
+每层可触发立即终止（熔断），最终几何裁决比较偏差率 ρ 与 MOD3 驱动的动态阈值 λ。
 
-```python
-def execute(self, full_df, master_df=None, decisions=None):
-    """四层洋葱审计：L1宪法 → L2物理 → L3证据 → L4拜占庭 → 几何裁决"""
-    # L1: 宪法检查（数据完整性 + π合法性 + 三重一致性）
-    err = self._exec_l1_constitution(full_df)
-    if err: return self._build_result()  # 熔断终止
+### 3. 27 格点状态 + SHA-256 因果链
 
-    # L2: 物理检查（PEFmod映射 + 影子图注入）
-    pefmods, err = self._exec_l2_physics(full_df, decisions)
-    if err: return self._build_result()
-
-    # L3: 证据融合（信息熵 + 拜占庭污染检测）
-    err = self._exec_l3_evidence(full_df)
-    if err: return self._build_result()
-
-    # L4: 拜占庭熔断（影子图完整性 + π锚闭环审计）
-    err = self._exec_l4_byzantine(pefmods, decisions)
-    if err: return self._build_result()
-
-    # 几何裁决（第一公理）：ρ ≤ λ → PASS，λ 由 MOD3 状态驱动
-    self.judge()  # rho = S4_Deviation_Rate, lambda = threshold by phase
-    # 公理自检（A1-A8 逐项验证）
-    self._run_self_checklist()
-    return self._build_result()
-```
-
-### 3. 27-Grid Lattice State + Causal Chain
-
-The M-layer (meta-cognition) monitors system state as a point in a 27-grid lattice (P/E/F each in {0,1,2}), encoded as G = 9·S_P + 3·S_E + S_F + 1. Every state snapshot is linked by a SHA-256 hash chain — tampering with any record breaks the entire chain.
+M 层把系统状态编码为 27 格点（P/E/F ∈ {0,1,2}，G = 9·S_P + 3·S_E + S_F + 1），每条状态快照由哈希链串联——篡改任一条 → 全链断裂。
 
 ```python
-# 27格点编码：G = 9×S_P + 3×S_E + S_F + 1
-def encode_grid(sp, se, sf):
-    if not all(0 <= s <= 2 for s in (sp, se, sf)):
-        raise ValueError(f"状态码必须在0-2之间: P={sp}, E={se}, F={sf}")
-    return 9 * sp + 3 * se + sf + 1
-
 def record_state(self, sp, se, sf, context=None):
     """记录状态快照到因果链日志（SHA-256哈希链，篡改任一条→全链断裂）"""
     g = encode_grid(sp, se, sf)
     dist = abs(sp) + abs(se) + abs(sf)  # 到锚点(0,0,0)的曼哈顿漂移距离
-    entry = {
-        'timestamp': time.time_ns(),
-        'sp': sp, 'se': se, 'sf': sf,
-        'grid_code': g, 'manhattan_distance': dist,
-        'drift_status': classify_drift(float(dist)),  # normal / warning / alarm
-    }
+    entry = {'timestamp': time.time_ns(), 'sp': sp, 'se': se, 'sf': sf,
+             'grid_code': g, 'manhattan_distance': dist,
+             'drift_status': classify_drift(float(dist))}
     if context:
         entry['context'] = context
-    # 因果链：每条日志哈希链接前一条，prev_hash 不可伪造
     entry['prev_hash'] = self._last_hash.hex()[:32]
     entry['hash'] = hashlib.sha256(str(entry).encode('utf-8')).hexdigest()[:32]
     self._last_hash = bytes.fromhex(entry['hash'])
@@ -249,204 +163,17 @@ def record_state(self, sp, se, sf, context=None):
 
 ---
 
-## What is PEF
+## 仓库边界（三类分区）
 
-PEF is an **anchored deterministic meta-architecture**. It is not a single system, not a library, not a framework. It is a pattern that can be instantiated in different domains with different anchors.
+| 类别 | 内容 | 校验方式 |
+|---|---|---|
+| **① 工程公理** | A1 切片形态约束 / A3 变量分流 / A4 时序因果 / A5-A8 | **代码强制校验**，违反即熔断（见 `axioms.md`） |
+| **② 策略约定** | π-Mod3 相位分配（可替换为步数取模） | 业务策略，不属不可动摇公理 |
+| **③ 元理论思辨** | 软件↔物理同构映射、π 正规性猜想、热力学锚类比 | **仅启发，不参与代码校验** |
 
-The pattern has two layers:
-
-1. **The Anchor Layer** — an unforgeable or unbreakable foundation that produces the potential difference (or coordinate) on which the system operates. No anchor → no potential difference → no variable → no evolution.
-2. **The Triad Layer** — three indivisible primitives **P (Primary Entity), E (Execution Variable), F (Final Result)** operating on the potential difference produced by the anchor.
-
-**The triad definition is determined by the anchor.** Different anchors produce different kinds of potential difference, which require different definitions of P, E, and F. This is deliberate — not inconsistency.
-
----
-
-## The Core Principle: Only the Anchor Produces Potential Difference
-
-> *唯锚才有势差产生。*
-
-A potential difference (or coordinate difference) is never self-generated by the triad. It must originate from the anchor.
-
-- In software, the anchor is **π** — its non-repeating, non-terminating digit sequence produces an unforgeable coordinate difference.
-- In physics, the anchor is **thermodynamic law** — energy gradients, entropy, and conservation produce the potential difference that drives all state evolution.
-
-If a variable or state transition cannot be traced back to a potential difference produced by the anchor, it is **illegitimate** — a hallucination, a forgery, or an ungrounded assumption. This is the first-principles foundation of PEF, and it is what makes the entire architecture deterministic rather than hopeful.
-
-### Without the anchor: what breaks
-
-This is not abstract. Each anchor property defends against a specific, real attack:
-
-| Attack | Without anchor (ordinary system) | With anchor (PEF) |
-|--------|----------------------------------|-------------------|
-| **Timestamp forgery** | AI sets system clock back, fabricates "earlier" audit entries; no one can prove the order was tampered | π-digits consumed cannot be un-consumed; temporal order is immutable by mathematical necessity |
-| **Variable hallucination** | AI invents a variable value with no source, calls it "optimization"; type systems and contract checks pass because the *usage* is valid | Every variable must trace to an anchor-produced potential difference; ungrounded variables trigger circuit breaker regardless of type-correctness |
-| **Log tampering** | AI modifies audit log after the fact; hash chains can be re-computed if the seed is known, or forked via consensus attack | Every log entry carries π-anchor coordinate + SHA-256 chain; π is unique and unforkable — tampering breaks the chain provably |
-| **Result fabrication** | AI claims a result was produced by a specific process at a specific time; no way to verify the (P, E, t) provenance | Every result F traces to (P, E, t) on an anchor coordinate; provenance is independently verifiable by any third party |
-| **E_in/E_out confusion** | AI treats an uncontrollable environment variable (system clock, network latency) as if it were controllable, producing "hallucinatory optimization" | A3 axiom enforces E_in/E_out partition at the anchor level; mixing triggers熔断 before the optimization is accepted |
-| **Identity spoofing** | AI forges a subject identity (name, type) to bypass access control; identity is self-declared | P must bind to a π-anchor interval (A5); identity is anchored, not self-declared — spoofing requires forging the anchor |
-
-The anchor is not a "nice to have." It is the difference between a system that *hopes* it is correct and a system that *can prove* it is correct.
-
----
-
-## Why This Is Not Obvious
-
-Every component of PEF — anchors, variables, triads, axioms, circuit breakers — exists in some form in existing technology. The claim of non-obviousness rests not on any single component, but on **four specific combinations that existing technology does not make**.
-
-### 1. The Triple-Property Anchor
-
-An ordinary "anchor" (timestamp, nonce, random seed, reference voltage) satisfies at most one or two of these properties. PEF requires all three simultaneously:
-
-| Property | Meaning | Ordinary timestamp | nonce | Random seed | π-anchor |
-|----------|---------|-------------------|-------|-------------|----------|
-| **Unpredictable** | Next value cannot be known before computation | ❌ (system clock is readable) | ⚠️ (if seed leaks) | ⚠️ (if seed leaks) | ✅ (π's next digit is unknowable before computation) |
-| **Irreversible** | Consumed values cannot be returned or rewound | ❌ (clock can be set back) | ❌ (can be replayed) | ❌ (can be re-seeded) | ✅ (consumed π-bits cannot be returned) |
-| **Globally unique** | All entities share one coordinate source | ⚠️ (NTP drift) | ❌ (local only) | ❌ (local only) | ✅ (one global π-sequence) |
-
-The combination of all three properties is not obvious. Existing systems trade off between them — they accept reversibility for convenience, or accept locality for performance. PEF refuses all three trade-offs by using a mathematical constant as the anchor.
-
-### 2. Anchor-Grounded Variables (Not Anchor-Constrained Usage)
-
-Existing type systems and contract-based design constrain **how variables are used** (type checks, preconditions, postconditions). PEF constrains **where variables come from**: every variable must trace to a potential difference produced by the anchor.
-
-This is a different layer of constraint. A variable can pass every type check and every contract assertion — and still be illegitimate in PEF if it cannot be traced to an anchor-produced potential difference. Existing technology does not enforce this layer.
-
-### 3. Cross-Domain Isomorphism
-
-The same meta-pattern (anchor → potential difference → triad) instantiates in two structurally different domains:
-
-- **Software:** π-anchor → coordinate difference → P(programming subject) / E(programming variable, E_in/E_out partition) / F(output, F=f(P,E,t))
-- **Physics:** thermodynamics-anchor → energy gradient → P(observed entity) / E(driving force, shift of potential difference) / F(stable terminal state)
-
-The constraint structures are isomorphic: both require anchor-grounded variables, both require traceable results, both forbid ungrounded state transitions. Existing technology treats software verification and physical safety as completely separate disciplines. PEF shows they are instances of the same meta-pattern.
-
-#### Isomorphism mapping (strict, 11 correspondences)
-
-This is not a vague analogy. Each concept has a precise correspondence grounded in the anchor's properties:
-
-| # | Concept | Software PEF (π-anchor) | Physical PEF (thermodynamics-anchor) | Isomorphism basis |
-|---|---------|--------------------------|---------------------------------------|-------------------|
-| 1 | **Anchor** | π (transcendental number, non-repeating non-terminating) | Thermodynamic law (energy conservation, entropy increase) | Both are foundations independent of the system; neither can be altered by the system's operation |
-| 2 | **Potential difference** | Coordinate difference (π-digit position interval) | Energy gradient (voltage / temperature / concentration difference) | Both are produced by the anchor, not self-generated by the triad |
-| 3 | **P · Primary Entity** | Programming subject (name / type / boundary / unit) | Observed physical or logical entity (minimal independent actor) | Both are the actor that state evolution acts upon; both must be explicitly declared |
-| 4 | **E · Execution Variable** | Programming variable, partitioned into E_in (controllable) / E_out (uncontrollable) | Driving force — the shift of potential difference produced by the thermodynamic anchor | Both are what drives state evolution; both must be anchor-grounded; both have a controllable/uncontrollable distinction |
-| 5 | **F · Final Result** | Output, formal form F = f(P, E_in, E_out, t) | Stable terminal state / irreversible physical effect | Both are the outcome of evolution; both must trace to (P, E, t); neither can precede its cause |
-| 6 | **Three-valued structure** | MOD3: three-state interrogation intensity (verification mechanism: loose / medium / strict) | Three-domain cooperation (architecture structure: proposal / veto / adjudication) | Both are three-valued structures operating on the triad; both drive a dynamic threshold (λ in software, physical inequality in hardware) |
-| 7 | **Governing rules** | Axioms A1–A8 (violation → circuit breaker / 熔断) | Thermodynamic laws (violation → physically impossible) | Both are inviolable constraints enforced by construction, not by review; both define what counts as "illegitimate" |
-| 8 | **Unforgeability** | π-digits cannot be predicted or computed in-context (A1); self-computation triggers熔断 | Thermodynamic processes are irreversible; entropy cannot decrease in a closed system | Both make the anchor coordinate immutable; both provide a foundation that cannot be faked by the system |
-| 9 | **Audit / provenance** | π-anchor coordinate + SHA-256 hash chain (append-only audit ledger) | Physical process trace — cannot be rewound, cannot be erased (entropy record) | Both provide tamper-evident provenance; both are grounded in the anchor's immutability, not in trust |
-| 10 | **Circuit breaker** | Axiom violation → immediate熔断 (P0), no graceful degradation | Physical constraint violation → system failure (e.g., relay cuts power), no graceful degradation | Both enforce correctness by construction; both reject the idea that "mostly correct" is acceptable |
-| 11 | **Time / causality** | Discrete irreversible steps (A4); result cannot precede cause; π-bit consumption is monotonic (A6) | Thermodynamic arrow of time; entropy increase defines the direction of causality | Both ground causality in the anchor's irreversibility, not in a clock that can be set back |
-
-The isomorphism is precise enough that a proof in one domain can be mapped to the other. For example: the software proof that "π-anchor monotonicity (A6) prevents temporal forgery" maps directly to the physical statement that "entropy increase prevents rewinding a physical process." This is the theoretical contribution — not a vague analogy, but a structural correspondence grounded in the anchor's mathematical and physical properties.
-
-### 4. Anchor-Based Tamper-Proof Audit (Not Hash-Chain-Based)
-
-Blockchain achieves tamper-proof audit through hash chains and computational consensus — which can be forked (51% attack) and depends on economic incentives. PEF achieves tamper-proof audit through the mathematical uniqueness of the anchor: there is only one π, only one thermodynamic reality. There is no "other chain" to fork, no economic incentive to attack. The audit chain is tamper-proof by mathematical necessity, not by consensus.
-
----
-
-## Two Anchored Systems
-
-PEF currently instantiates the meta-architecture in two domains. **The boundary is strict:** they share the meta-pattern, but their anchors, triad definitions, axioms, and mechanisms are different. No concept crosses the boundary without explicit re-grounding in the target anchor.
-
-### System 1: Software PEF (π-Anchored)
-
-**Domain:** AI-assisted programming, software verification, code audit
-**Anchor:** The mathematical constant π (transcendental number, non-repeating, non-terminating digit sequence)
-
-#### Triad Definitions (Software)
-
-| Primitive | Definition |
-|-----------|-----------|
-| **P · Primary Entity** | The acting subject of a computation task. Must be explicitly declared with four fields: `name`, `type` (LOGICAL / PHYSICAL / HUMAN), `boundary`, `unit`. |
-| **E · Execution Variable** | Variables used in the computation. Must be partitioned into **E_in** (controllable input) and **E_out** (uncontrollable output). Mixing them causes hallucinatory optimization. |
-| **F · Final Result** | The output, traceable to `(P, E, t)` where `t` is a moment on the π-anchor. Formal form: `F = f(P, E_in, E_out, t)`. |
-
-#### MOD3 — Three-State Interrogation (Software)
-A **verification mechanism** (not an architecture structure). Three interrogation intensities driven by π-digit mod 3:
-
-| State | Intensity | Allows | Forbids |
-|-------|-----------|--------|---------|
-| 0 | Loose | Divergence, subject identification | Final conclusions, implementation code |
-| 1 | Medium | Strict verification, constraint checking | New divergence, new proposals |
-| 2 | Strict | Binary PASS/FAIL adjudication | Vague terms, continued divergence |
-
-#### Axioms (Software: A1–A8)
-Violation of any axiom triggers熔断 (circuit breaker):
-
-| Axiom | Statement |
-|-------|-----------|
-| **A1** Unforgeability | Unforgeable coordinate must come from external π-source. Self-computation of π-digits triggers熔断. |
-| **A2** Triad Completeness | Every computation must explicitly declare P, E, and F. |
-| **A3** Variable Partition | E must be partitioned into E_in and E_out. Mixed variables trigger熔断. |
-| **A4** Temporal Causality | Discrete irreversible time steps. Result cannot precede cause. |
-| **A5** π-Anchor Binding | Every code entity must bind to a unique π-anchor interval. |
-| **A6** Anchor Monotonicity | Consumed π-bits cannot be skipped or returned. |
-| **A7** Audit Traceability | Every F must be traceable to (P, E, t). |
-| **A8** Memory Alignment | Cross-language memory layout aligned to anchor coordinate. |
-
----
-
-### System 2: Physical PEF (Thermodynamics-Anchored)
-
-**Domain:** Hardware safety, physical control systems, high-reliability engineering
-**Anchor:** Thermodynamic law — energy conservation, entropy increase, irreversibility of physical processes
-
-#### Triad Definitions (Physical)
-
-| Primitive | Definition |
-|-----------|-----------|
-| **P · Primary Entity** | The minimal independent physical or logical entity that executes actions and produces change. It is **the observed object**. |
-| **E · Execution Variable** | The rules, parameters, energy flows, or constraints that act on the entity and drive its state evolution. It is **the driving force — the shift of potential difference produced by the thermodynamic anchor.** |
-| **F · Final Result** | The stable state or irreversible effect the system reaches after variables act on the entity. It is **the terminal state of evolution.** |
-
-#### PEF Three-Domain Cooperation (Physical)
-An **architecture structure** (not a verification intensity):
-
-| Domain | Role |
-|--------|------|
-| **P · Proposal Domain** | Generates strategy proposals, circuit topologies, code suggestions. |
-| **E · Veto Domain** | Audits proposals with destructive perspective, finds physical deadlocks, exercises veto. |
-| **F · Adjudication Domain** | Final arbitration based on physical inequalities, outputs binary PASS/FAIL. |
-| **M · Final Review Layer** | Scheduler — drives the thermodynamic clock, maintains global state. |
-
-**Boundary note:** In internal documents, this physical three-domain structure is sometimes called "MOD3." In the software system, "MOD3" means three-state interrogation intensity. **These are different concepts sharing a name: physical MOD3 = architecture structure; software MOD3 = verification intensity.**
-
-#### Physical Constraints
-Governed by thermodynamic law, not software axioms:
-- **Energy conservation:** ΣE_in = ΣE_out + ΣE_loss
-- **Entropy increase:** irreversible processes increase total entropy
-- **Potential difference grounding:** every E must trace to a thermodynamic gradient
-
----
-
-## Boundary Map
-
-| Concept | Software PEF (π-anchor) | Physical PEF (thermodynamics-anchor) |
-|---------|--------------------------|---------------------------------------|
-| **Anchor** | π (transcendental number) | Thermodynamic law |
-| **Anchor produces** | Unforgeable coordinate difference | Potential difference (energy gradient) |
-| **P** | Programming subject, four-field declaration | Observed physical / logical entity |
-| **E** | Programming variable, E_in / E_out partition | Driving force / shift of potential difference |
-| **F** | Programming output, F = f(P, E_in, E_out, t) | Stable terminal state / irreversible effect |
-| **MOD3** | Three-state interrogation intensity | Three-domain cooperation structure |
-| **Governing rules** | Eight axioms A1–A8 | Thermodynamic laws |
-| **Illegitimate** | Self-computed π, mixed E_in/E_out, untraceable F | Variables without thermodynamic grounding, energy-imbalanced transitions, entropy-decreasing results |
-
----
-
-## What PEF Contributes
-
-PEF does not invent new algorithms, new mathematical formalisms, or new control structures. The operator library contains 500+ existing algorithms; the state evolution equation is a standard state-space model; three-domain cooperation is a classic control architecture.
-
-**PEF's contribution is anchored determinism:**
-
-1. **Anchor-grounded variables** — every variable traces to an anchor-produced potential difference. No anchor, no variable.
-2. **Unforgeable provenance** — every result F traces to (P, E, t) on an anchor coordinate. The anchor cannot be predicted, rewound, or forged.
-3. **Axiomatic circuit breaking** — violations trigger immediate熔断, not "best practice" reviews. The system enforces correctness by construction.
-4. **Cross-domain meta-pattern** — the same anchor→potential-difference→triad pattern works in both software and physics.
+**公开/私有边界**：
+- ✅ 本仓库公开：理论规约、公理体系、签名代码、最小 demo、Skill 实测证据
+- ❌ 不上公开：**硬件设计方案（专利保护中，白皮书已移除）**、客户生产数据、参数阈值细节、完整内核实现（在独立私有/受控仓库）
 
 ---
 
@@ -454,85 +181,65 @@ PEF does not invent new algorithms, new mathematical formalisms, or new control 
 
 ```
 pef-architecture/
-├── README.md                              # Meta-architecture, two systems, boundary map, non-obviousness
+├── README.md                              # 本文件：定位、架构、边界
 ├── LICENSE                                # MIT License
-├── demo_minimal.py                        # 30-second verifiable demo (extracted from production)
-├── PEF-Gate-Hardware-Veto-White-Paper-Public.pdf  # Physical PEF instantiation
+├── demo_minimal.py                        # 30秒可验证 demo（8/8 PASS）
 │
-├── axioms.md          # ← Entry-level summaries (read first)
-├── primitives.md      # Software P·E·F definitions
-├── pi-anchor.md       # The π-anchor coordinate system
-├── mod3.md            # Three-state interrogation
-├── topology.md        # Five-layer pipeline topology
+├── axioms.md          # ① 公理体系（三类分区 + A1 切片形态约束）
+├── primitives.md      # P·E·F 三元原语定义
+├── pi-anchor.md       # π-锚：时序标记组件（防坍缩定位 + 诚实边界）
+├── mod3.md            # MOD3 三态审问机制
+├── topology.md        # 五层流水线拓扑
 │
-├── 01-core-spec/                        # ← Complete design specification (deep dive)
-│   ├── README.md                         # Layer navigation
-│   ├── pef-7.6-pro-design-spec.md       # PEF 7.6 Pro complete design spec (~88K chars)
-│   └── time-theory-appendix.md           # Dual-axis time theory
+├── review/
+│   └── review-response.md                 # 外部评审回应与整改记录（V2.5）
 │
-├── 02-applications/                     # ← π-anchor application extensions
-│   ├── README.md                         # Application谱系 (π 1st/2nd/3rd/4th applications)
-│   ├── cic-cross-model-governance.md     # π 3rd app: CIC cross-model code governance
-│   └── pimem-genetic-memory.md           # π 4th app: PIMEM π-genetic chain memory
+├── examples/                              # ★ Skill 实测证据（可复现）
+│   ├── README.md                          # 实例导航
+│   ├── cle-probe/                         # 确定性代码探针（49/49 回归 + 跨函数污点）
+│   ├── pimem-memory/                      # π-基因链记忆仓库（漂移比对 + 哈希验真）
+│   ├── pef-longtext/                      # 长文本审计（百万字遍历 + 拜占庭污点）
+│   └── mmc-compiler/                      # 多模型方言编译（5 模型真实 API 测试）
 │
-├── 03-operator-library/                 # ← PEF triad operator library
-│   ├── README.md
-│   ├── operator-library-core.md           # Complete operator classification
-│   ├── operator-library-v3-800.md         # 800 new operators (1600–2026 span)
-│   └── operator-library-3.8-probe.md      # CLE 3.8 probe system adaptation
+├── 01-core-spec/                          # 完整设计规范（深读）
+│   └── pef-7.6-pro-design-spec.md        # PEF 7.6 Pro 完整设计规范（V2.5 修正版）
 │
-├── 04-engineering-cases/                # ← Real-world engineering deployments
-│   ├── README.md
-│   └── cle-probe/
-│       ├── README.md
-│       ├── cle-l1-l3-technical.md         # CLE V3.8.2 L1-L3 three-layer technical doc
-│       ├── cle-systematic-integration.md   # Systematic integration & deployment guide
-│       └── cle-five-stage-workflow.md      # Five-stage complete workflow
-│
-└── 05-references/                       # ← External reference & industry analysis
-    ├── README.md
-    ├── ai-programming-trio.md             # AI programming trio architecture comparison
-    └── multimodal-hallucination-report.md # Multimodal LLM hallucination breakthrough report
-
-docs/
-├── promotion-article-zh.md              # Chinese narrative: "I use π as an anchor"
-├── knowledge-base-guide.zh.md           # 中文：知识库导读与同步映射
-└── knowledge-base-guide.en.md           # English: Knowledge base guide & sync mapping
+├── 02-applications/                       # π-锚应用扩展（CIC / PIMEM）
+├── 03-operator-library/                   # PEF 三元算子库（核心 + 800 扩展）
+├── 04-engineering-cases/                  # 工程案例（CLE 探针工作流）
+└── 05-references/                         # 外部参考与行业分析
 ```
-
-> This repository is the **public theory layer**: meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, mechanism concepts, a 30-second verifiable demo, and signature code extracted from production. The five root-level `.md` files (`axioms`, `primitives`, `pi-anchor`, `mod3`, `topology`) are **entry-level theoretical summaries**. The complete design specification, formal proofs, operator library, application extensions, and engineering case studies are in the numbered directories (`01-core-spec/` through `05-references/`). Read the summaries first, then dive into the numbered directories by interest. The physical PEF (thermodynamics-anchored) system is documented in the Hardware Veto White Paper (PDF). The code reference implementation is in the separate **pef-core-reference** repository.
-
-## Public Boundary
-
-This is PEF's **public theory layer**. It contains meta-architecture definitions, boundary maps, conceptual axiom and primitive explanations, and mechanism concepts.
-
-It does **not** contain: implementation code, circuit schematics, parameter thresholds, protocol field details, operator internals, complete verification derivations, or physical hardware designs. These are restricted technical materials.
-
-## Reading Path
-
-### 5-Minute Entry (read these first)
-
-1. **This README** — the hook, the core principle, the non-obviousness argument, the two systems
-2. **primitives.md** — Software P·E·F triad definitions (who acts, what variables, what result)
-3. **pi-anchor.md** — how the π-anchor produces an unforgeable coordinate axis
-4. **mod3.md** — how three-state interrogation reveals hidden fragility
-5. **topology.md** — how the software triad assembles into a five-layer pipeline
-6. **axioms.md** — the eight axioms that enforce determinism (A1–A8)
-
-### 30-Minute Deep Dive
-
-7. **01-core-spec/pef-7.6-pro-design-spec.md** — the complete PEF 7.6 Pro design specification
-8. **demo_minimal.py** — run the 30-second verifiable demo (`python demo_minimal.py`, expect 8/8 PASS)
-
-### Explore by Interest
-
-- **π-anchor applications** → `02-applications/` (CIC cross-model governance, PIMEM genetic memory)
-- **Operator library** → `03-operator-library/` (complete classification, 800+ operators, engineering adaptation)
-- **Engineering cases** → `04-engineering-cases/cle-probe/` (CLE V3.8.2 deterministic code probe system)
-- **Industry context** → `05-references/` (AI programming trio, multimodal hallucination report)
-- **Code reference** → [pef-core-reference](https://github.com/banbanry/pef-core-reference) (19 modules, ~3,900 lines, A/B evaluation)
-- **Knowledge base guide (双语导读)** → [中文](docs/knowledge-base-guide.zh.md) / [English](docs/knowledge-base-guide.en.md) — repository guide & Feishu knowledge base sync mapping
 
 ---
 
-*PEF Architecture · Public Theory Layer · Only the anchor produces the potential difference. No anchor, no variable. No trace, no result.*
+## Reading Path
+
+### 5-Minute Entry
+1. **本 README** — 定位与架构
+2. **primitives.md** — P·E·F 三元定义
+3. **axioms.md** — 公理体系（工程公理 / 策略约定 / 思辨三类分区）
+4. **pi-anchor.md** — π-锚的真实定位（防坍缩，非密码学）
+
+### 30-Minute Deep Dive
+5. **01-core-spec/pef-7.6-pro-design-spec.md** — 完整设计规范
+6. **examples/** — 4 个 Skill 的真实运行验证（推荐先看，这是"能跑的证明"）
+7. `python demo_minimal.py` — 30 秒自检
+
+### 面对评审
+8. **review/review-response.md** — 8 项属实指控整改 + 3 项误读澄清
+
+### Explore by Interest
+- **Skill 实测证据** → `examples/`（探针 / 记忆 / 长文本 / 多模型编译）
+- **完整内核** → [pef-core-reference](https://github.com/banbanry/pef-core-reference)（19 模块 ~3.9K 行，A/B evaluation）
+- **算子库** → `03-operator-library/`
+- **应用扩展** → `02-applications/`（CIC 跨模型治理 / PIMEM 基因记忆）
+
+---
+
+## License & Attribution
+
+MIT License · © 2026 沈鹭 (banbanry) · 厦门恒元架构科技有限公司
+
+---
+
+*PEF Architecture · 分层 LLM 幻觉治理审计流水线。不提高提取准确率，提高检测坏提取的能力与全部提取的可审计性。*
