@@ -177,6 +177,60 @@ def record_state(self, sp, se, sf, context=None):
 
 ---
 
+## Knowledge Map — 知识地图（阅读总纲）
+
+```mermaid
+mindmap
+  root((PEF<br/>分层审计流水线))
+    L0 理论层
+      axioms 公理（三类分区）
+      primitives 三元原语
+      pi-anchor π-锚定位
+      mod3 三态审问
+      topology 五层拓扑
+    L1 规范层
+      01-core-spec 设计规范
+      time-theory 时间理论
+    L2 产品层
+      06-skill-products
+        cle-code-probe 探针
+        pimem-memory 记忆
+        pef-longtext 长文本
+        mmc-compiler 方言编译
+    L3 应用层
+      02-applications
+        CIC 跨模型治理
+        PIMEM 设计理论
+    L4 案例层
+      04-engineering-cases
+        CLE 探针工作流
+    L5 证据层
+      examples 实测证据
+      30秒 demo_minimal
+    L6 参考层
+      03-operator-library 算子库
+      05-references 外部参考
+    External
+      pef-core-reference 内核仓库
+      4 skill GitHub 仓库
+      飞书 PEFMOD 知识库
+```
+
+| 层 | 入口 | 内容 |
+|---|---|---|
+| L0 理论 | `axioms.md` `primitives.md` `pi-anchor.md` `mod3.md` `topology.md` | 第一性原理：三元原语、公理、π-锚定位 |
+| L1 规范 | `01-core-spec/` | PEF 7.6 Pro 完整设计规范（V2.5 修正版） |
+| **L2 产品** | `06-skill-products/` | **4 个 Skill 产品：功能/理论/代码/验证全链路** |
+| L3 应用 | `02-applications/` | CIC 跨模型治理、PIMEM 基因记忆设计 |
+| L4 案例 | `04-engineering-cases/` | CLE 探针工程工作流 |
+| **L5 证据** | `examples/` + `demo_minimal.py` | **真实运行验证：4 Skill 实测 + 8/8 自检 demo** |
+| L6 参考 | `03-operator-library/` `05-references/` | 算子库、行业分析 |
+| 外部 | [pef-core-reference](https://github.com/banbanry/pef-core-reference) · [cle-code-probe](https://github.com/banbanry/cle-code-probe) · [pef-longtext](https://github.com/banbanry/pef-longtext) · [pimem-memory](https://github.com/banbanry/pimem-memory) · [mmc-compiler](https://github.com/banbanry/mmc-compiler) · 飞书知识库 | 内核代码 + 产品代码 + 私域知识库 |
+
+> **阅读顺序建议**：先跑 `python demo_minimal.py`（30 秒感受）→ 读 L0 理论（5 分钟）→ 看 L5 证据（验证"能跑"）→ 深入 L1 规范 → 按兴趣进 L2/L3/L4。
+
+---
+
 ## Repository Structure
 
 ```
@@ -193,6 +247,13 @@ pef-architecture/
 │
 ├── review/
 │   └── review-response.md                 # 外部评审回应与整改记录（V2.5）
+│
+├── 06-skill-products/                     # ★ Skill 产品区（功能/理论/代码/验证全链路）
+│   ├── README.md                          # 产品矩阵 + 链路结构
+│   ├── cle-code-probe.md                  # 确定性代码探针
+│   ├── pimem-memory.md                    # π-基因链记忆仓库
+│   ├── pef-longtext.md                    # 长文本拜占庭污点审计
+│   └── mmc-compiler.md                    # 多模型方言编译
 │
 ├── examples/                              # ★ Skill 实测证据（可复现）
 │   ├── README.md                          # 实例导航
@@ -224,6 +285,10 @@ pef-architecture/
 5. **01-core-spec/pef-7.6-pro-design-spec.md** — 完整设计规范
 6. **examples/** — 4 个 Skill 的真实运行验证（推荐先看，这是"能跑的证明"）
 7. `python demo_minimal.py` — 30 秒自检
+
+### Skill 产品（L2）
+8. **06-skill-products/** — 4 个 Skill 的功能/理论映射/代码仓库/验证证据全链路：
+   - [cle-code-probe](06-skill-products/cle-code-probe.md) · [pimem-memory](06-skill-products/pimem-memory.md) · [pef-longtext](06-skill-products/pef-longtext.md) · [mmc-compiler](06-skill-products/mmc-compiler.md)
 
 ### 面对评审
 8. **review/review-response.md** — 8 项属实指控整改 + 3 项误读澄清
