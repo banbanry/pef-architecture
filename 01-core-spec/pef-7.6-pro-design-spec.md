@@ -12,7 +12,7 @@ PEF 7.6 Pro
 
 物理铁律 × π标记坐标系 × 原文坐标锚定 × 种子-树生命体架构
 
-π域（物理实体记忆）  |  √2域（算力熔断区）  |  π-Mod3相位调度
+π域（物理实体记忆）  |  √2域（算力节流区）  |  π-Mod3相位调度
 
 版本：7.6 Pro 终稿
 整合自 π标记承载变量协议、完整提示词工程方案 及 架构演进讨论
@@ -25,7 +25,7 @@ PEF‑7.6 Pro 完整白皮书 · 序言&阅读导读
 
 序言
 
-本文件为 PEF‑7.6 Pro（重量模式） 的完整正式设计规范，建立在 PEF‑7.6（轻量版 π标记坐标系审计器）内核之上，扩展出种子‑树生命体架构、π‑Mod3相位调度、SBX2根系记忆网络、π域/√2域算力熔断、深地层与灰色地带握手全套能力，用于百万字级别长工程文档、跨版本、跨文档的物理形式化证伪。
+本文件为 PEF‑7.6 Pro（重量模式） 的完整正式设计规范，建立在 PEF‑7.6（轻量版 π标记坐标系审计器）内核之上，扩展出种子‑树生命体架构、π‑Mod3相位调度、SBX2根系记忆网络、π域/√2域算力节流、深地层与灰色地带握手全套能力，用于百万字级别长工程文档、跨版本、跨文档的物理形式化证伪。
 
 本系统要解决的核心问题：大语言模型长上下文下的实体身份幻觉——并非简单的编造事实，而是实体客观真实，但在多轮、跨区块推演中变量身份发生漂移；语义阅读通顺，但底层数学绑定已经错位，致使整套推导悄悄失效。
 
@@ -137,7 +137,7 @@ L1‑L4洋葱层级为物理硬锁：单向递进，不允许跳层；C层校验
 
 R_forced审问强度（Pro版本）：由π‑Mod3相位协议数学生成，不是人为随意配置的参数，目的消除人为审问强度带来的主观偏向。
 
-π域 / √2域双轨分流：π域为高价值工程文本全算力处理；√2域是算力熔断区，针对修辞、虚构、无明确物理实体的文本，只做索引，不做深度物理解析。
+π域 / √2域双轨分流：π域为高价值工程文本全算力处理；√2域是算力节流区，针对修辞、虚构、无明确物理实体的文本，只做索引，不做深度物理解析。
 
 算子不属于AI：CRITIC等算子库归属M层调度器。AI仅输出算子调用的“空盒子模板”，求解执行由母系统完成，避免大模型主观选择算子带来偏差。
 
@@ -209,7 +209,7 @@ R_forced审问强度（Pro版本）：由π‑Mod3相位协议数学生成，不
 
 5.3  实轨（π域）：物理级记忆引擎
 
-5.4  虚轨（√2域）：算力熔断器
+5.4  虚轨（√2域）：算力节流区
 
 5.5  SBX2黑匣子数据库
 
@@ -766,14 +766,14 @@ def get_pi_digit(n):
     """获取π的第n位数字(1-indexed)，实际工程中应预计算或查表"""
     pi_str = "31415926535897932384626433832795028841971693993751"
     if n <= 0 or n > len(pi_str):
-        return 0
+        raise ValueError(f"pi digit out of range: {n}")
     return int(pi_str[n - 1])
 
 def compute_phase(pi_mark, block_id, pi_manager):
     """计算当前区块的物理相位"""
     pi_digit = pi_manager.get_pi_digit(pi_mark)
     if pi_digit is None:
-        pi_digit = 0
+        raise RuntimeError("pi binding missing: refuse silent fallback")
     phase = (pi_digit + block_id) % 3
     return phase
 
@@ -808,13 +808,13 @@ def dispatch_operator_mode(phase):
 
 在M层调度算子时，不再一股脑全上，而是根据π位特征选择当前的主导算子类型。P态（Phase=0）优先调用P层算子，策略为激进搜索、扩大解空间，适用于新项目启动初期或数据缺失严重时。E态（Phase=1）优先调用E层算子，策略为紧缩边界、执行物理证伪，适用于关键参数锚定或发现异常数据时。F态（Phase=2）优先调用F层算子，策略为平衡冲突、多源证据融合，适用于多文档数据冲突或软硬接口对齐时。  [P0078]
 
-相位跳变即系统状态的物理相变。随着Block_ID增加，π位移动，系统在探索(P)、校验(E)、裁决(F)三种状态中有序轮转，类似晶体震荡。这确保了审计过程的数学完备性——每个区块都会经历不同强度的审问，不存在被遗漏的死角。  [P0079]
+相位跳变即系统状态的物理相变。随着Block_ID增加，π位移动，系统在探索(P)、校验(E)、裁决(F)三种状态中有序轮转，类似晶体震荡。这提供了确定性的相位轮转机制（周期≤9、可复现），保证每个区块都会经历不同强度的审问。  [P0079]
 
 4.4  审计强度R_forced的物理生成  [P0080]
 
 ⚠ 矛盾标记: R_forced生成方式矛盾：源文档1&2规定R_forced由M层"计算"下发（可能引入主观偏差）；π-Mod3协议规定R_forced由π位物理生成（数学确定性）。本规范采用π-Mod3方案，详见附录A矛盾汇总表第1项。
 
-审计强度R_forced原本由M层"计算"下发，这可能引入主观偏差。π-Mod3协议用π位生成R_forced，实现物理级公正。公式：R_forced = (π_digit + 偏移量) mod 3。由于PEF 7.6定义R=0/1/2，正好匹配mod 3的结果。  [P0081]
+审计强度R_forced原本由M层"计算"下发，这可能引入主观偏差。π-Mod3协议用π位生成R_forced，消除主观偏差（确定性分片，非密码学意义上的公正）。公式：R_forced = (π_digit + 偏移量) mod 3。由于PEF 7.6定义R=0/1/2，正好匹配mod 3的结果。  [P0081]
 
 [P0082]
 
@@ -838,7 +838,7 @@ def dispatch_operator_mode(phase):
 
 5.1  双轨分流漏斗  [P0092]
 
-系统入口设置三元组探针，对所有输入文本进行毫秒级分流判定。判定为物理实体的文本进入实轨（π域），执行全算力深度处理；判定为无主体/隐喻/乱语的文本进入虚轨（√2域），执行算力熔断，仅做最基础的索引存储。这一双轨制确保算力聚焦于高价值工程文本，不在虚无缥缈的乱语中浪费算力。  [P0093]
+系统入口设置三元组探针，对所有输入文本进行确定性分流判定。判定为物理实体的文本进入实轨（π域），执行全算力深度处理；判定为无主体/隐喻/乱语的文本进入虚轨（√2域），执行算力节流，仅做最基础的索引存储。这一双轨制确保算力聚焦于高价值工程文本，不在虚无缥缈的乱语中浪费算力。  [P0093]
 
 ⚠ 矛盾标记: 虚轨标识符矛盾：早期讨论使用ψ（psi）域标记虚轨；后期用户明确要求"虚轨还是用根号二最简单省算力"。本规范采用√2作为虚轨标识，详见附录A矛盾汇总表第2项。
 
@@ -848,7 +848,7 @@ def dispatch_operator_mode(phase):
 
 三元组探针是分流器，在文本进入记忆层前快速识别其物理属性。输入为文本片段，逻辑是尝试提取{主体, 变量, 结果}三元组。判定为π域的条件：存在明确的物理实体（如MOS管、电压）、存在可度量的变量（如时间、幅值）、符合物理守恒律（非魔法、非玄幻）。判定为√2域的条件：无主体（如"时光飞逝"）、主体为虚构实体（如飞剑、灵力）、逻辑断裂或纯修辞描写。  [P0096]
 
-# 三元组探针：毫秒级分流判定
+# 三元组探针：确定性分流判定
 import re
 
 PHYSICAL_ENTITY_WHITELIST = {
@@ -934,11 +934,11 @@ F层算子（D-S证据理论dstz库、DSmT）处理跨文档数据冲突。场�
 
 长文档（如200页DataSheet）不能一次性处理，采用滑动窗口+状态继承机制。分块注入：将长文本切分为Block_1, Block_2, ..., Block_N。上下文继承：处理Block_2时自动继承Block_1建立的π映射表，若出现新变量则在已有π表基础上追加。跨块验证：若Block_3中的参数与Block_1冲突，触发F层算子进行跨页证据融合。  [P0109]
 
-5.4  虚轨（√2域）：算力熔断器  [P0110]
+5.4  虚轨（√2域）：算力节流区  [P0110]
 
-虚轨针对科幻、玄幻、散文、乱语，执行极简处理，拒绝浪费算力。√2是无理数的典型代表，无限不循环，精准映射玄幻、散文、乱语文本的特性——无限维度、无规律循环、不可计算。当系统遇到√2标记，直接判定为不可解析域，立即切断算力供给。  [P0111]
+虚轨针对科幻、玄幻、散文、乱语，执行极简处理，拒绝浪费算力。√2是无理数的典型代表，无限不循环，精准映射玄幻、散文、乱语文本的特性——无限维度、无规律循环、不可计算。当系统遇到√2标记，直接判定为低价值处理域，立即停止深度解析（算力节流）。  [P0111]
 
-处理流程三步：打标（标记为√2）、休眠（所有高级算子P/E/F物理断电，拒绝启动）、堆栈（直接将原始文本块扔入冷数据区，不做任何结构化解析）。检索时仅支持关键词匹配（如Linux grep指令），拒绝回答逻辑问题（如"飞剑速度多少"），系统回复"该对象属于√2域，无物理定义"。  [P0112]
+处理流程三步：打标（标记为√2）、休眠（不启用高级算子P/E/F，仅保留索引）、堆栈（直接将原始文本块扔入冷数据区，不做任何结构化解析）。检索时仅支持关键词匹配（如Linux grep指令），拒绝回答逻辑问题（如"飞剑速度多少"），系统回复"该对象属于√2域，无物理定义"。  [P0112]
 
 // √2域数据结构——极简存储
 {
@@ -1373,14 +1373,14 @@ class PhaseScheduler:
         """计算物理相位: (pi_digit + block_id) % 3"""
         pi_digit = self.pi_mgr.get_pi_digit(pi_mark)
         if pi_digit is None:
-            pi_digit = 0
+            raise RuntimeError("pi binding missing: refuse silent fallback")
         return (pi_digit + block_id) % 3
 
     def compute_r_forced(self, pi_mark, block_id, offset=0):
         """计算审计强度R_forced: (pi_digit + offset) % 3"""
         pi_digit = self.pi_mgr.get_pi_digit(pi_mark)
         if pi_digit is None:
-            pi_digit = 0
+            raise RuntimeError("pi binding missing: refuse silent fallback")
         return (pi_digit + offset) % 3
 
     def get_dispatch_strategy(self, phase):
@@ -1510,7 +1510,7 @@ class PEF76ProScheduler:
             "block_id": block_id,
             "raw_hash": raw_hash,
             "status": "STORED_WITHOUT_ANALYSIS",
-            "message": "√2域文本，算力熔断，仅做基础索引"
+            "message": "√2域文本，算力节流，仅做基础索引"
         }
 
     def _call_worker_L1(self, text, source_file):
@@ -1538,8 +1538,11 @@ class PEF76ProScheduler:
             "L2_critic_count": len(critic_calls) > 0,
             "L2_origin_anchored": all(cc.origin_offset for cc in critic_calls),
             "L3_solve_complete": all(r["status"] != "UNRESOLVED" for r in solve_results),
-            "L4_no_contradiction": all(
-                r["status"] != "FAIL" for r in solve_results
+            "L4_structure_consistent": all(
+                r["status"] != "UNRESOLVED" and not r.get("error") for r in solve_results
+            ),
+            "L4_falsification_found": any(
+                r["status"] == "FAIL" for r in solve_results
             )
         }
         checks["C_PASS"] = all(checks.values())
@@ -1928,7 +1931,7 @@ L=3的C层校验项：所有不等式求解完成（L3_solve_complete，无UNRES
 
 L=4是开花结果层，任务是交付判决。在F态（Phase=2）下，L=4优先执行，调用F层算子（DS证据理论）处理多源冲突，输出最终置信度。当R_forced=2时，L=4必须执行毁灭性证伪——主动攻击自身结论的边界，寻找在什么极限工况下系统会崩溃。  [P0210]
 
-L=4的C层校验项：无矛盾结论（L4_no_contradiction，所有求解结果无FAIL状态）。如果存在FAIL状态，最终状态印章标记为FAIL，审计报告必须包含失败详情和原文坐标。L=4输出完整的JSON状态印章，作为本次审计的最终交付物。  [P0211]
+L=4的C层校验项分为两个字段：结构一致性（L4_structure_consistent，无UNRESOLVED/异常）与违规发现标记（L4_falsification_found，存在FAIL即检出违规）。FAIL 是求解器发现的合法审计结论，由终判阶段给出 FAIL 状态，不归类为结构校验失败；结构不一致（UNRESOLVED/异常）才触发矫正流程。审计报告必须包含失败详情和原文坐标。L=4输出完整的JSON状态印章，作为本次审计的最终交付物。  [P0211]
 
 第十一章  双通道输出协议  [P0212]
 
@@ -1987,7 +1990,8 @@ C_CHECK = {
     "L2_entropy_sufficient": True,    # L=2: 输出Token >= 500（防偷懒）
     "L3_solve_complete": True,        # L=3: 所有不等式求解完成（无UNRESOLVED）
     "L3_topology_covered": True,      # L=3: 拓扑覆盖完整
-    "L4_no_contradiction": True,      # L=4: 无矛盾结论（无FAIL）
+    "L4_structure_consistent": True,   # L=4: 结构一致（无UNRESOLVED/异常）
+    "L4_falsification_found": False,  # L=4: 违规发现（存在FAIL即True）
     "L4_falsification_done": True,    # L=4: R_forced=2时毁灭性证伪已执行
     "C_PASS": True                    # 全部通过
 }  [P0225]
@@ -2087,7 +2091,7 @@ result = scheduler.audit_text(block_text, source_file)  [P0248]
 
 第五步：π坐标系求解。M层从SBX2查询数值并代入不等式。时序不等式：1.5e-6 + 500e-3 < 10e-3 → 0.5000015 < 0.01 → FAIL（软件响应延迟500ms远超总时限10ms）。电压偏差：|5-5|/5=0 < 0.05 → PASS。热限值：85 < 150 → PASS（裕度65°C）。  [P0254]
 
-第六步：C层协同校验。L1_entity_count=True（8个实体），L2_critic_count=True（3个CRITIC），L2_origin_anchored=True，L2_entropy_sufficient=True（输出Token>500），L3_solve_complete=True（全部求解完成），L4_no_contradiction=False（时序不等式FAIL）。C_PASS=False（因L4存在FAIL）。  [P0255]
+第六步：C层协同校验。L1_entity_count=True（8个实体），L2_critic_count=True（3个CRITIC），L2_origin_anchored=True，L2_entropy_sufficient=True（输出Token>500），L3_solve_complete=True（全部求解完成），L4_structure_consistent=True（结构完整），L4_falsification_found=True（检出时序违规）。C_PASS=True（结构校验通过；违规作为合法审计结论进入终判）。  [P0255]
 
 第七步：终判与状态印章。最终状态为FAIL（时序不等式失败）。审计结果回存SBX2的Verification_Logs表。系统输出完整审计报告，标注失败详情和原文坐标，建议工程师检查软件响应延迟参数。  [P0256]
 
@@ -2161,8 +2165,9 @@ result = scheduler.audit_text(block_text, source_file)  [P0248]
     "L2_origin_anchored": true,
     "L2_entropy_sufficient": true,
     "L3_solve_complete": true,
-    "L4_no_contradiction": false,
-    "C_PASS": false
+    "L4_structure_consistent": true,
+    "L4_falsification_found": true,
+    "C_PASS": true
   },
   "status_seal": {
     "B": 1,
@@ -2432,7 +2437,7 @@ def startup_protocol():
 SYSTEM_BANNER = """
 =================================================
   PEF 7.6 Pro - 物理审计系统
-  π域(物理实体记忆) | √2域(算力熔断区)
+  π域(物理实体记忆) | √2域(算力节流区)
   π-Mod3相位调度 | 种子-树生命体架构
 =================================================
   你是物理审计工蜂。你的树干由π坐标系铸造，
@@ -2446,9 +2451,9 @@ SYSTEM_BANNER = """
 
 PEF 7.6 Pro 是一个物理锚定、数学确定、形式化验证的工程文本审计系统。它通过π标记坐标系将变量身份从自然语言空间提升到数学空间，通过原文坐标锚定消灭AI幻觉填充，通过信息熵代价铁则对抗统计压缩，通过子母分层架构解决状态遗忘问题。这四个机制分别对应AI处理长文本的四个根本缺陷。  [P0303]
 
-系统的核心创新是π-Mod3相位调度协议。算子的调用不依赖主观判断，而由π序列的数学属性决定。相位(π_digit + Block_ID) mod 3将系统状态分为探索(P)、校验(E)、融合(F)三种，随着区块推进有序轮转，类似晶体震荡。这确保了审计过程的数学完备性，每个区块都经历不同强度的审问。  [P0304]
+系统的核心创新是π-Mod3相位调度协议。算子的调用不依赖主观判断，而由π序列的数学属性决定。相位(π_digit + Block_ID) mod 3将系统状态分为探索(P)、校验(E)、融合(F)三种，随着区块推进有序轮转，类似晶体震荡。这提供了确定性的相位轮转机制，每个区块都经历不同强度的审问。  [P0304]
 
-记忆层采用双轨分流漏斗设计。实轨（π域）对工程文档执行全算力深度处理，虚轨（√2域）对小说乱语执行算力熔断，仅做基础索引。这一设计确保算力聚焦于高价值文本，不在虚无缥缈的乱语中浪费算力。SBX2黑匣子通过哈希链防篡改，确保记忆层数据的完整性和可追溯性。  [P0305]
+记忆层采用双轨分流漏斗设计。实轨（π域）对工程文档执行全算力深度处理，虚轨（√2域）对小说乱语执行算力节流，仅做基础索引。这一设计确保算力聚焦于高价值文本，不在虚无缥缈的乱语中浪费算力。SBX2黑匣子通过哈希链防篡改，确保记忆层数据的完整性和可追溯性。  [P0305]
 
 深地层与灰色地带接口是7.6 Pro 区别于7.6轻量模式的核心能力。深地层采用考古地层结构，记录所有历史版本。灰色地带握手协议通过快照模式和钻探模式，让AI能看到项目的前世今生，具备版本级审计能力。灰色地带不再是AI猜测的死角，而是系统确定的抓手。  [P0306]
 
@@ -2466,7 +2471,7 @@ A.1  矛盾第1项：R_forced生成方式  [P0312]
 
 [P0313]
 
-选择方案：方案B（π-Mod3协议）。选择原因：方案B消除了R_forced生成的主观偏差，实现了物理级公正。π序列决定了当前审问必须是严还是宽，AI无权干预。这与PEF系统"数学确定性剥夺选择权"的核心理念完全一致。修改建议：删除源文档中"M层计算R_forced"的描述，统一采用π-Mod3公式生成R_forced。  [P0314]
+选择方案：方案B（π-Mod3协议）。选择原因：方案B消除了R_forced生成的主观偏差（确定性分片，非密码学意义上的公正）。π序列决定了当前审问必须是严还是宽，AI无权干预。这与PEF系统"数学确定性剥夺选择权"的核心理念完全一致。修改建议：删除源文档中"M层计算R_forced"的描述，统一采用π-Mod3公式生成R_forced。  [P0314]
 
 A.2  矛盾第2项：虚轨标识符  [P0315]
 
@@ -2685,7 +2690,7 @@ A.8  矛盾第8项：记忆层是否始终启用  [P0333]
 | F态(Phase=2) | 融合裁决态，激活F层算子(DS证据理论) | 相位调度器 |
 | R_forced | 审问强度，0=稳定/1=临界/2=深度，由π位生成 | 相位调度器 |
 | π域(实轨) | 物理实体记忆，全算力深度处理 | 记忆层 |
-| √2域(虚轨) | 算力熔断区，仅做基础索引存储 | 记忆层 |
+| √2域(虚轨) | 算力节流区，仅做基础索引存储 | 记忆层 |
 | 深地层 | SBX2底层历史存储，考古地层结构 | 记忆层 |
 | 灰色地带 | 物理状态不明确或逻辑判定边界模糊的区域 | 记忆层/审计层接口 |
 | Grey_Query | 灰度查询指令，AI向深地层请求支援的唯一接口 | 记忆层/审计层接口 |
