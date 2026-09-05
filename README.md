@@ -143,7 +143,7 @@ The demo demonstrates, in ~600 lines extracted from production code:
 
 > *Teaching-grade minimal implementation. Production-grade 19-module kernel: [pef-core-reference](https://github.com/banbanry/pef-core-reference)*
 
-**Reference implementation (desensitized, runnable):** [pef-core-reference](https://github.com/banbanry/pef-core-reference) — the production PEF kernel extracted and desensitized: 19 modules, 2200+ lines, minimal demo with 8/8 self-check PASS. `pip install -r requirements.txt && python demo_minimal.py`
+**Reference implementation (desensitized, runnable):** [pef-core-reference](https://github.com/banbanry/pef-core-reference) — the production PEF kernel extracted and desensitized: 19 modules, ~3,900 lines (π-anchor core / operator library / evidence fusion / L1–L3 pipeline / Byzantine tests / closed-loop engine), minimal demo with 8/8 self-check PASS. `pip install -r requirements.txt && python demo_minimal.py`
 
 > *[PEF Gate Hardware Veto White Paper](./PEF-Gate-Hardware-Veto-White-Paper-Public.pdf)* — the physical PEF instantiation: a four-domain pure-hardware veto layer against model deception.
 
@@ -530,7 +530,7 @@ It does **not** contain: implementation code, circuit schematics, parameter thre
 - **Operator library** → `03-operator-library/` (complete classification, 800+ operators, engineering adaptation)
 - **Engineering cases** → `04-engineering-cases/cle-probe/` (CLE V3.8.2 deterministic code probe system)
 - **Industry context** → `05-references/` (AI programming trio, multimodal hallucination report)
-- **Code reference** → [pef-core-reference](https://github.com/banbanry/pef-core-reference) (19 modules, 2200+ lines, A/B evaluation)
+- **Code reference** → [pef-core-reference](https://github.com/banbanry/pef-core-reference) (19 modules, ~3,900 lines, A/B evaluation)
 - **Knowledge base guide (双语导读)** → [中文](docs/knowledge-base-guide.zh.md) / [English](docs/knowledge-base-guide.en.md) — repository guide & Feishu knowledge base sync mapping
 
 ---
