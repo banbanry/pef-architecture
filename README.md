@@ -101,6 +101,29 @@ Demo 演示：三级账本 / 锚定写入时序（t_state ≤ t_anchor ≤ t_wri
 
 ---
 
+### 可复现证据层（第三方独立验证）
+
+本仓库的证据不是"作者声称 PASS"，而是**可被任何人独立复现的运行结果**。
+
+**一条命令复现核心机制**（audit + byzantine 11场景 + inject金丝雀验收）：
+
+```bash
+python examples/cle-probe/reproduce.py --probe-dir /path/to/cle-code-probe
+# 预期：3/3 复现成功，退出码 0
+```
+
+**三个超出预期的实证发现**：
+
+| # | 发现 | 说明 | 证据 |
+|---|------|------|------|
+| 1 | **FAIL 裁决样本** | 含漏洞样本的审计结果是 FAIL（P0=除零, P1=sprintf无边界）。一个验证系统如果只展示 PASS 就一文不值；敢放出自己的 FAIL 样本，说明系统真的在跑、且裁决不是恒真函数 | `examples/cle-probe/vuln_sample.c` + 复现脚本 |
+| 2 | **金丝雀注入验收（防"假审计"）** | C1-C4 金丝雀注入机制直击真实痛点："AI 声称自己审过了"不可信。用已知缺陷注入来验收审计器本身——这是同类工具里罕见的设计。文档明确披露"AI Layer 2 欺诈风险（P0，已发生过）"，把自己的事故写进文档 | `cle-code-probe` 仓库 `inject` 命令 + V1-V6 反欺诈协议 |
+| 3 | **后段溯源漂移（独立知识产出）** | 110 万字真实语料跑出有研究价值的结论：无锚论断密度 14→24→27 单调递增（+93%），"论断越写越无据"。这不再是为架构背书的测试，而是独立的知识产出。且明确标注"注意力剖面是规则代理指标，不是真实 LLM 注意力测量" | `pef-longtext` 仓库实测数据页 |
+
+**与基础 Linter 的检出率对照**：用 5 个标准测试样本对比 CLE Code Probe 与基础正则 Linter（模拟 clang-tidy / Bandit 基础能力），CLE 的核心差异化优势是**跨函数污点传播（BFS+别名分析）**和**资源泄漏检测**，但在 gets/malloc 检测上有已知短板——两者互补使用最佳。详见 [examples/cle-probe/COMPARISON.md](examples/cle-probe/COMPARISON.md)。
+
+---
+
 ## Signature Code（生产抽取的签名模式）
 
 这些是实现模式，不是伪代码——从生产部署抽取。

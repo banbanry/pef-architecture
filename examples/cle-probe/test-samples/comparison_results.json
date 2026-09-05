@@ -1,0 +1,42 @@
+﻿[
+    {
+        "Sample":  "01_basic_vuln.c",
+        "CLE_P0":  1,
+        "CLE_P1":  1,
+        "CLE_Verdict":  "FAIL",
+        "Basic_P0":  1,
+        "Basic_P1":  1
+    },
+    {
+        "Sample":  "02_taint_propagation.c",
+        "CLE_P0":  2,
+        "CLE_P1":  1,
+        "CLE_Verdict":  "FAIL",
+        "Basic_P0":  1,
+        "Basic_P1":  1
+    },
+    {
+        "Sample":  "03_dangerous_functions.c",
+        "CLE_P0":  0,
+        "CLE_P1":  3,
+        "CLE_Verdict":  "REVIEW",
+        "Basic_P0":  1,
+        "Basic_P1":  2
+    },
+    {
+        "Sample":  "04_hardcoded_leak.c",
+        "CLE_P0":  2,
+        "CLE_P1":  1,
+        "CLE_Verdict":  "FAIL",
+        "Basic_P0":  0,
+        "Basic_P1":  0
+    },
+    {
+        "Sample":  "05_clean_code.c",
+        "CLE_P0":  1,
+        "CLE_P1":  0,
+        "CLE_Verdict":  "FAIL",
+        "Basic_P0":  1,
+        "Basic_P1":  0
+    }
+]
