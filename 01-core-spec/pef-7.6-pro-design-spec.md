@@ -2004,7 +2004,7 @@ L=2校验：CRITIC调用数量必须大于零，否则审计无实质内容。�
 
 L=3校验：所有不等式必须求解完成（无UNRESOLVED状态），存在UNRESOLVED时触发数据补全流程。拓扑覆盖必须完整——原文描述的所有物理约束都有对应不等式。如果原文提到"电压、电流、温度"三个约束，但只建立了两个不等式，L=3校验失败。  [P0229]
 
-L=4校验：无矛盾结论——所有求解结果无FAIL状态。存在FAIL时最终状态印章标记为FAIL。R_forced=2时毁灭性证伪必须已执行，否则L=4校验失败。毁灭性证伪的输出必须包含反事实测试用例。  [P0230]
+L=4校验：分为两个独立字段——L4_structure_consistent（结构一致性：所有求解结果无UNRESOLVED状态、无异常错误）和L4_falsification_found（违规发现：存在FAIL即True，表示审计正确检出违规，是合法审计结论而非系统错误）。C_PASS为True表示结构校验通过；违规作为合法审计结论进入终判，不影响C_PASS。R_forced=2时毁灭性证伪必须已执行，否则L4校验失败。毁灭性证伪的输出必须包含反事实测试用例。  [P0230]
 
 12.3  M层终判机制  [P0231]
 
@@ -2177,7 +2177,7 @@ result = scheduler.audit_text(block_text, source_file)  [P0248]
     "S": "FAIL",
     "pi_count": 8,
     "critic_count": 3,
-    "C": false,
+    "C": true,
     "T": "2026-07-23T10:30:00"
   },
   "recommendation": "时序约束失败：软件响应延迟(500ms)远超总时限(10ms)。"
