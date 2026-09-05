@@ -20,12 +20,14 @@
 
 | 样本 | CLE P0 | CLE P1 | CLE 裁决 | Basic P0 | Basic P1 | CLE 独有检出 | Basic 独有检出 |
 |------|--------|--------|---------|----------|----------|-------------|---------------|
-| 01_basic_vuln.c | 1 | 1 | FAIL | 1 | 1 | — | malloc调用(误报) |
-| 02_taint_propagation.c | 2 | 1 | FAIL | 1 | 1 | **污点传播(跨函数BFS)** | — |
-| 03_dangerous_functions.c | 0 | 3 | REVIEW | 1 | 2 | — | **gets(P0)** |
-| 04_hardcoded_leak.c | 2 | 1 | FAIL | 0 | 0 | **资源泄漏、除零(变量)** | — |
+| 01_basic_vuln.c | 2 | 1 | FAIL | 1 | 1 | **malloc NULL检查(P0)** | malloc调用(误报) |
+| 02_taint_propagation.c | 2 | 2 | FAIL | 1 | 1 | **污点传播(跨函数BFS)** | — |
+| 03_dangerous_functions.c | 1 | 3 | FAIL | 1 | 2 | — | — |
+| 04_hardcoded_leak.c | 3 | 1 | FAIL | 0 | 0 | **资源泄漏、除零(变量)、malloc NULL检查(P0)** | — |
 | 05_clean_code.c | 1 | 0 | FAIL | 1 | 0 | — | malloc调用(误报) |
-| **合计** | **6** | **6** | — | **4** | **4** | — | — |
+| **合计** | **9** | **7** | — | **4** | **4** | — | — |
+
+> **V3.9.2 更新**：新增 `DangerousFunctionDetector`（gets/vsprintf/scanf/getwd/crypt）和 `MallocNullCheckDetector`（malloc/calloc/realloc NULL检查追踪，5行窗口上下文分析）两个算子。gets 和 malloc NULL 检查的检测盲区已补充。
 
 ## 三、关键发现
 
@@ -39,14 +41,14 @@
 | **π 调度 + D-S 证据融合** | 不同文件→不同哈希→不同π序列→激活不同特征子集，避免全量遍历的性能问题 | 架构级优势，不在单样本对照中体现 |
 | **洋葱流水线 Gate0-8** | 多级门控拦截，空输入/解析失败/图构建失败等边界情况有专门处理 | 05样本：clean code 仍被误报，但有完整的裁决链和状态向量 |
 
-### 3.2 CLE 的已知短板（基础 Linter 能做到的）
+### 3.2 CLE 的已知短板（V3.9.2 已补充部分）
 
-| 短板 | 说明 | 证据 | 修复建议 |
-|------|------|------|---------|
-| **gets 危险函数漏检** | CLE 的特征库没有覆盖 `gets()` 这个已被 C11 移除的危险函数 | 03样本：Basic 检出 gets P0，CLE 完全未检出 | 在 `pef_operators.py` 或 `fault_library_1000.json` 中增加 gets/strcat 等危险函数规则 |
-| **malloc 未检查 NULL 漏检** | CLE 能检测 malloc，但没有后续 NULL 检查的追踪逻辑 | 01样本：两者都未准确检出（Basic 是误报 malloc 调用，CLE 完全漏检） | 增加"malloc 后 N 行内无 NULL 检查"的模式检测 |
-| **clean code 误报** | 对有正确 NULL 检查的 malloc 仍可能误报 | 05样本：两者都误报 P0 | 增加"malloc 后有 NULL 检查则不告警"的逻辑 |
-| **硬编码密码检测弱** | 对 `#define PASSWORD "xxx"` 形式的硬编码密码检测不足 | 04样本：Basic 的正则也没匹配到（因为是 #define 形式） | 增加 #define 形式的硬编码密码/密钥检测规则 |
+| 短板 | 状态 | 说明 |
+|------|------|------|
+| ~~gets 危险函数漏检~~ | ✅ **V3.9.2 已修复** | 新增 `DangerousFunctionDetector`，覆盖 gets/vsprintf/scanf(%s)/getwd/crypt |
+| ~~malloc 未检查 NULL 漏检~~ | ✅ **V3.9.2 已修复** | 新增 `MallocNullCheckDetector`，5行窗口上下文分析，有NULL检查则不误报 |
+| ~~clean code 误报~~ | ✅ **V3.9.2 已修复** | `MallocNullCheckDetector` 正确识别已有 NULL 检查，clean code 不误报 |
+| **硬编码密码检测弱** | ⚠️ 待修复 | 对 `#define PASSWORD "xxx"` 形式的硬编码密码检测不足，下版本补充 |
 
 ### 3.3 两者都做不到的（需要更高级工具）
 
@@ -86,10 +88,10 @@ CLE 不应该单独使用——它的短板（gets/malloc 检测）正好是基�
 
 ### 下一步改进
 
-1. **P0 优先级**：在 fault_library 中增加 gets/strcat 等危险函数规则（半小时工作量）
-2. **P1 优先级**：增加 malloc 后 NULL 检查追踪逻辑（2小时工作量）
-3. **P2 优先级**：增加 #define 形式的硬编码密码检测（半小时工作量）
-4. **P3 优先级**：与 clang-tidy 结果合并的对比报告生成器（1天工作量）
+1. ✅ **P0 已完成**：V3.9.2 新增 `DangerousFunctionDetector`，覆盖 gets/vsprintf/scanf/getwd/crypt
+2. ✅ **P1 已完成**：V3.9.2 新增 `MallocNullCheckDetector`，5行窗口上下文分析，有NULL检查则不误报
+3. **P2 待完成**：增加 #define 形式的硬编码密码检测（半小时工作量）
+4. **P3 待完成**：与 clang-tidy 结果合并的对比报告生成器（1天工作量）
 
 ---
 
