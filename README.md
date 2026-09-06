@@ -20,6 +20,47 @@
 
 ---
 
+## 🚀 立即体验（可运行工具）
+
+理论不是纸上谈兵——PEF 架构已有 6 个可运行的工程实例，从代码审计到长文本处理，从记忆管理到多模型编译，全部开源可复现。
+
+### 🗡️ AI 编程三剑客（核心工具链）
+
+| 工具 | PEF编号 | 一句话 | 一条命令 | 仓库 |
+|------|---------|--------|----------|------|
+| **CLE 代码探针** | PEF0001 | AI 说"我审过了"不可信——用确定性探针 + 拜占庭金丝雀注入验证审计器本身，防"假测试通过" | `python cle_deploy.py byzantine` | [cle-code-probe](https://github.com/banbanry/cle-code-probe) |
+| **CIC 幻觉检测仪** | PEF0008 | 识别 AI 生成的"空壳代码"——空函数、幽灵变量、假逻辑、TODO占位、跨模型方言偏差 | `python cic_cli.py audit --input code.py` | [pef-core-reference/cic](https://github.com/banbanry/pef-core-reference/tree/main/cic) |
+| **PEF-π 防伪身份证** | 整合 | 给代码发不可篡改的身份证——π锚定、哈希链、影子图、状态账本、时序审计 | `python demo_minimal.py` | [pef-core-reference](https://github.com/banbanry/pef-core-reference) |
+
+> **三剑客不是三个独立工具，而是同一套 PEF 架构在三个正交维度上的部署**——先过滤幻觉（CIC）→ 再检测缺陷（CLE）→ 最后锚定信任（PEF-π），内容、质量、信任，三个维度全覆盖。
+
+### 🧩 扩展工具（前沿方向）
+
+| 工具 | PEF编号 | 一句话 | 一条命令 | 仓库 |
+|------|---------|--------|----------|------|
+| **长文本审计** | PEF0002 | 百万字级长文本的幻觉治理——实体漂移检测、无锚论断识别、注意力剖面分析（实测后段漂移 +93%） | `python pef77_cli.py audit longtext.txt` | [pef-longtext](https://github.com/banbanry/pef-longtext) |
+| **π 基因链记忆** | PEF0003 | 用 π 锚为主体分配永久身份基因的记忆仓库——解决 AI 长任务的"主体漂移"和"记忆丢失" | `python pimem_cli.py init --source design.md` | [pimem-memory](https://github.com/banbanry/pimem-memory) |
+| **多模型方言编译器** | PEF0004 | 把任意大模型（DeepSeek/GLM/Claude/豆包/智谱）的输出方言统一编译到 PEF 标准格式，消除方言偏差 | `python mmc_cli.py compile --input output.json` | [mmc-compiler](https://github.com/banbanry/mmc-compiler) |
+
+### ⚡ 30 秒快速开始
+
+```bash
+# 克隆三剑客整合仓库，运行最小演示（8/8自检，含P0熔断和篡改检测）
+git clone https://github.com/banbanry/pef-core-reference.git
+cd pef-core-reference
+pip install -r requirements.txt
+python demo_minimal.py
+# 预期输出：SELF-CHECK: 8/8 PASS
+```
+
+```bash
+# 克隆代码探针，运行拜占庭对抗测试（11场景，验证探针本身）
+git clone https://github.com/banbanry/cle-code-probe.git
+cd cle-code-probe
+python resources/cle_deploy.py byzantine
+# 预期输出：11/11 PASS, S5=0.0
+```
+
 ## 架构总览：五层流水线
 
 ```mermaid
