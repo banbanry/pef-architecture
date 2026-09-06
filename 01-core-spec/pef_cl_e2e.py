@@ -18,7 +18,7 @@ from pef_cl_engine import (build_probes, ModelVoter, run_tier2_3,
 
 def load_tier1_results():
     """读取 tier1 中间结果（内生循环定案）"""
-    base = r'D:\WorkBuddy'
+    base = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(base, 'pef_loop_summary.json'), encoding='utf-8') as f:
         summary = json.load(f)
     with open(os.path.join(base, 'pef_loop_pass1.json'), encoding='utf-8') as f:
@@ -113,9 +113,10 @@ def main():
         'ledger': global_ledger.entries,
         'ledger_verified': global_ledger.verify()[0],
     }
-    with open(r'D:\WorkBuddy\pef_cl_e2e_result.json', 'w', encoding='utf-8') as f:
+    result_path = os.path.join(base, 'pef_cl_e2e_result.json')
+    with open(result_path, 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print(f"\n✅ 端到端串联完成 → D:\\WorkBuddy\\pef_cl_e2e_result.json")
+    print(f"\n✅ 端到端串联完成 → {result_path}")
 
 if __name__ == '__main__':
     main()
