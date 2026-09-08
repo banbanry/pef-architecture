@@ -3,6 +3,21 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Code Reference](https://img.shields.io/badge/code-pef--core--reference-green.svg)
 
+
+---
+
+## 🧠 Philosophical Foundation — The First Principle of First Principles
+
+> *Someone called this architecture a "renamed pseudo-framework." So I audited it for 58 minutes. Here's the base layer.*
+
+PEF is built on the **P / E / F first principle** — Primary Entity, Execution Variable, Final Result. This is not a new philosophical discovery — its lineage traces back to Descartes, Kant, and Hume. PEF's innovation is **turning those philosophical insights into an executable deconstruction-and-reconstruction workflow**: stop at P/E/F, split variables, enumerate the combination space, use causal trace to approximate truth.
+
+A first principle is not an auditing tool — auditing is just the causal trace chain that comes with it. The real work is **deconstruct, then reconstruct** — systematically exploring variable combinations through trial and error, approaching truth one reproducible step at a time.
+
+→ **[Read the full philosophical foundation (English)](philosophy/00-hook.md)** — Why every other "first principle" falls short, why this base layer can hold up an architecture, and the honest boundaries.
+
+---
+
 > **PEF 是一套「无状态 LLM 工蜂 + 确定性 M 层内核 + 哈希链日志 + 分层门控矫正」的长文本/多 Agent 幻觉治理审计流水线。**
 > **π-锚是这套架构采用的一套时序分片标记方案**——仅用于日志标记、会话分片与防向量坍缩；架构主体可以替换该标记组件而不失效。
 
