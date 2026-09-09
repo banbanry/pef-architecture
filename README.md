@@ -6,15 +6,55 @@
 
 ---
 
-## 🧠 Philosophical Foundation — The First Principle of First Principles
+## 🧠 地基：P/E/F 第一性原理 — The First Principle of First Principles
 
-> *Someone called this architecture a "renamed pseudo-framework." So I audited it for 58 minutes. Here's the base layer.*
+> *有人叫这架构是"改了名字的伪框架"。我花了58分钟用自己的框架审自己的框架。这是底座。*
 
-PEF is built on the **P / E / F first principle** — Primary Entity, Execution Variable, Final Result. This is not a new philosophical discovery — its lineage traces back to Descartes, Kant, and Hume. PEF's innovation is **turning those philosophical insights into an executable deconstruction-and-reconstruction workflow**: stop at P/E/F, split variables, enumerate the combination space, use causal trace to approximate truth.
+**这是整个项目的地基。** 不是审计工具，不是思考框架，是一套**可执行的拆解重构工作流**。
 
-A first principle is not an auditing tool — auditing is just the causal trace chain that comes with it. The real work is **deconstruct, then reconstruct** — systematically exploring variable combinations through trial and error, approaching truth one reproducible step at a time.
+PEF 建立在 **P / E / F 第一性原理**上——Primary Entity（主体）、Execution Variable（变量）、Final Result（结果）。这不是新的哲学发现——谱系可以追溯到笛卡尔、康德、休谟。PEF 的创新是**把这些哲学洞见变成可执行的拆解重构工作流**：拆到 P/E/F 就停，变量分流，组合空间枚举，因果追溯逼近真值。
 
-→ **[Read the full philosophical foundation (English)](philosophy/00-hook.md)** — Why every other "first principle" falls short, why this base layer can hold up an architecture, and the honest boundaries.
+第一性原理不是审计工具——审计只是附带的因果追溯链。真正的工作是**拆解，然后重构**——系统性地探索变量组合，通过试错逼近真值，一步一个可复现的脚印。
+
+### 三个不可再分的原语
+
+| 原语 | 全称 | 一句话 | 硬约束 |
+|------|------|--------|--------|
+| **P** | Primary Entity（主体） | 谁在做 | 必须有名字、边界、单位。不能是模糊的"系统" |
+| **E** | Execution Variable（变量） | 用什么做 | 必须分流为 E_in（可控输入）/ E_out（不可控环境量）。混合变量 = 幻觉优化 |
+| **F** | Final Result（结果） | 得到什么 | 必须可追溯至 (P, E, t)。F 不可先于原因 |
+
+> **为什么不可再分？** 拆"主体"→谁在拆？又是一个主体。拆"变量"→分类本身需要主体执行。拆"结果"→"偏差"的判断需要主体定义。**P 是执行拆解的起点，不可消除。**
+>
+> P 不是形而上学真理，是**单主体、可追溯场景下的有用工程约定**。
+
+### 五步工作流
+
+```
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│ 1.拆解   │ →  │ 2.分流   │ →  │ 3.枚举   │ →  │ 4.试错   │ →  │ 5.逼近   │
+│Deconstruct│   │ Split    │    │ Enumerate│   │ Trial    │    │ Approximate│
+└──────────┘    └──────────┘    └──────────┘    └──────────┘    └──────────┘
+     │               │               │               │               │
+ 任务→P/E/F      E→E_in/E_out    P固定+E分流    每组产生        因果追溯链
+ 三个原语         消除幻觉优化    组合空间可枚举   F=f(P,E,t)     比对哪组更接近真值
+```
+
+| 步骤 | 做什么 | 产出 |
+|------|--------|------|
+| **1. 拆解** | 任何任务 → P/E/F 三个不可再分单元 | P 声明、E 清单、F 定义 |
+| **2. 分流** | 变量 → 可控 / 不可控 | E_in 清单、E_out 清单 |
+| **3. 枚举** | P 固定、E 分流后，组合空间可枚举 | 有限的试错组合列表 |
+| **4. 试错** | 逐组尝试，每组产生 F=f(P,E,t) | 可复现的结果序列 |
+| **5. 逼近** | 因果追溯链比对，判断哪组更接近真值 | 方向收敛 + 下一轮细化 |
+
+> **市面上的第一性原理是指南针，P/E/F 是施工图。** 指南针告诉你方向，但不知道拆到哪算完、变量怎么分、组合空间怎么枚举、怎么验证这次试错是不是更接近真值。
+
+→ **[3 分钟快速入门](philosophy/01-quickstart.md)** — 极简版，一张图看懂 P/E/F 第一性原理
+
+→ **[完整哲学基础（英文）](philosophy/00-hook.md)** — 为什么其他"第一性原理"都撑不起架构，为什么这个底座能撑住，以及诚实的边界
+
+→ **[七锤自我审判（叙事版）](philosophy/self-trial/)** — 用第一人称叙事把底座拆了重构，九锤击碎九层幻觉
 
 ---
 
@@ -66,6 +106,19 @@ A first principle is not an auditing tool — auditing is just the causal trace 
 
 理论不是纸上谈兵——PEF 架构已有 6 个可运行的工程实例，从代码审计到长文本处理，从记忆管理到多模型编译，全部开源可复现。
 
+### 从第一性原理到工具链
+
+> **P/E/F 第一性原理不是纸上谈兵——它已经落地为 6 个可运行的工程实例。每个工具都是同一套地基在不同维度的部署。**
+
+| 工具 | PEF编号 | 第一性原理的体现 | 一条命令 | 仓库 |
+|------|---------|-----------------|----------|------|
+| **CLE 代码探针** | PEF0001 | P 层主体声明 + E 层变量分流 + F 层结果追溯，用确定性探针验证审计器本身 | `python cle_deploy.py byzantine` | [cle-code-probe](https://github.com/banbanry/cle-code-probe) |
+| **CIC 幻觉检测仪** | PEF0008 | 检测"空壳代码"——P/E/F 字段缺失或不一致的 AI 生成代码 | `python cic_cli.py audit --input code.py` | [pef-core-reference/cic](https://github.com/banbanry/pef-core-reference/tree/main/cic) |
+| **PEF-π 防伪身份证** | 整合 | π 锚坐标 + 哈希链，给代码发不可篡改的身份证 | `python demo_minimal.py` | [pef-core-reference](https://github.com/banbanry/pef-core-reference) |
+| **长文本审计** | PEF0002 | 百万字级文本的 P/E/F 实体漂移检测 + 无锚论断识别 | `python pef77_cli.py audit longtext.txt` | [pef-longtext](https://github.com/banbanry/pef-longtext) |
+| **π 基因链记忆** | PEF0003 | 用 π 锚为主体分配永久身份基因，解决 AI 长任务的主体漂移 | `python pimem_cli.py init --source design.md` | [pimem-memory](https://github.com/banbanry/pimem-memory) |
+| **多模型方言编译器** | PEF0004 | 把任意大模型输出统一编译到 P/E/F 标准格式，消除方言偏差 | `python mmc_cli.py compile --input output.json` | [mmc-compiler](https://github.com/banbanry/mmc-compiler) |
+
 ### 🗡️ AI 编程三剑客（核心工具链）
 
 | 工具 | PEF编号 | 一句话 | 一条命令 | 仓库 |
@@ -75,14 +128,6 @@ A first principle is not an auditing tool — auditing is just the causal trace 
 | **PEF-π 防伪身份证** | 整合 | 给代码发不可篡改的身份证——π锚定、哈希链、影子图、状态账本、时序审计 | `python demo_minimal.py` | [pef-core-reference](https://github.com/banbanry/pef-core-reference) |
 
 > **三剑客不是三个独立工具，而是同一套 PEF 架构在三个正交维度上的部署**——先过滤幻觉（CIC）→ 再检测缺陷（CLE）→ 最后锚定信任（PEF-π），内容、质量、信任，三个维度全覆盖。
-
-### 🧩 扩展工具（前沿方向）
-
-| 工具 | PEF编号 | 一句话 | 一条命令 | 仓库 |
-|------|---------|--------|----------|------|
-| **长文本审计** | PEF0002 | 百万字级长文本的幻觉治理——实体漂移检测、无锚论断识别、注意力剖面分析（实测后段漂移 +93%） | `python pef77_cli.py audit longtext.txt` | [pef-longtext](https://github.com/banbanry/pef-longtext) |
-| **π 基因链记忆** | PEF0003 | 用 π 锚为主体分配永久身份基因的记忆仓库——解决 AI 长任务的"主体漂移"和"记忆丢失" | `python pimem_cli.py init --source design.md` | [pimem-memory](https://github.com/banbanry/pimem-memory) |
-| **多模型方言编译器** | PEF0004 | 把任意大模型（DeepSeek/GLM/Claude/豆包/智谱）的输出方言统一编译到 PEF 标准格式，消除方言偏差 | `python mmc_cli.py compile --input output.json` | [mmc-compiler](https://github.com/banbanry/mmc-compiler) |
 
 ### ⚡ 30 秒快速开始
 
@@ -289,6 +334,10 @@ def record_state(self, sp, se, sf, context=None):
 mindmap
   root((PEF<br/>分层审计流水线))
     L0 理论层
+      第一性原理 P/E/F
+        philosophy/01-quickstart 3分钟入门
+        philosophy/00-hook 完整哲学基础
+        philosophy/self-trial 七锤自我审判
       axioms 公理（三类分区）
       primitives 三元原语
       pi-anchor π-锚定位
@@ -316,6 +365,9 @@ mindmap
     L6 参考层
       03-operator-library 算子库
       05-references 外部参考
+    文学层
+      fiction 科幻中篇（中文）
+      the-architects-dream 英文独立仓库
     External
       pef-core-reference 内核仓库
       4 skill GitHub 仓库
@@ -324,16 +376,17 @@ mindmap
 
 | 层 | 入口 | 内容 |
 |---|---|---|
-| L0 理论 | `axioms.md` `primitives.md` `pi-anchor.md` `mod3.md` `topology.md` | 第一性原理：三元原语、公理、π-锚定位 |
+| **L0 理论** | `philosophy/` `axioms.md` `primitives.md` `pi-anchor.md` `mod3.md` `topology.md` | **第一性原理：P/E/F 三元原语、五步工作流、公理、π-锚定位** |
 | L1 规范 | `01-core-spec/` | PEF 7.6 Pro 完整设计规范（V2.5 修正版） |
 | **L2 产品** | `06-skill-products/` | **4 个 Skill 产品：功能/理论/代码/验证全链路** |
 | L3 应用 | `02-applications/` | CIC 跨模型治理、PIMEM 基因记忆设计 |
 | L4 案例 | `04-engineering-cases/` | CLE 探针工程工作流 |
 | **L5 证据** | `examples/` + `demo_minimal.py` | **真实运行验证：4 Skill 实测 + 8/8 自检 demo** |
 | L6 参考 | `03-operator-library/` `05-references/` | 算子库、行业分析 |
+| **文学层** | `fiction/` + [the-architects-dream](https://github.com/banbanry/the-architects-dream) | **科幻中篇小说：九锤自我审判，从拉普拉斯妖到诚实观测者** |
 | 外部 | [pef-core-reference](https://github.com/banbanry/pef-core-reference) · [cle-code-probe](https://github.com/banbanry/cle-code-probe) · [pef-longtext](https://github.com/banbanry/pef-longtext) · [pimem-memory](https://github.com/banbanry/pimem-memory) · [mmc-compiler](https://github.com/banbanry/mmc-compiler) · 飞书知识库 | 内核代码 + 产品代码 + 私域知识库 |
 
-> **阅读顺序建议**：先跑 `python demo_minimal.py`（30 秒感受）→ 读 L0 理论（5 分钟）→ 看 L5 证据（验证"能跑"）→ 深入 L1 规范 → 按兴趣进 L2/L3/L4。
+> **阅读顺序建议**：先读 [3分钟第一性原理入门](philosophy/01-quickstart.md)（地基）→ 跑 `python demo_minimal.py`（30秒感受）→ 看 L5 证据（验证"能跑"）→ 深入 L1 规范 → 按兴趣进 L2/L3/L4/文学层。
 
 ---
 
@@ -345,11 +398,19 @@ pef-architecture/
 ├── LICENSE                                # MIT License
 ├── demo_minimal.py                        # 30秒可验证 demo（8/8 PASS）
 │
+├── philosophy/                            # ★ 第一性原理（地基）
+│   ├── 01-quickstart.md                  # 3分钟快速入门
+│   ├── 00-hook.md                        # 完整哲学基础（英文）
+│   └── self-trial/                        # 七锤自我审判（叙事版）
+│
 ├── axioms.md          # ① 公理体系（三类分区 + A1 切片形态约束）
 ├── primitives.md      # P·E·F 三元原语定义
 ├── pi-anchor.md       # π-锚：逻辑坐标标记组件（防坍缩定位 + 诚实边界）
 ├── mod3.md            # MOD3 三态审问机制
 ├── topology.md        # 五层流水线拓扑
+│
+├── fiction/                               # ★ 科幻中篇小说（中文）
+│   └── README.md                          # 小说导航 + 11章
 │
 ├── review/
 │   └── review-response.md                 # 外部评审回应与整改记录（V2.5）
@@ -382,22 +443,27 @@ pef-architecture/
 ## Reading Path
 
 ### 5-Minute Entry
-1. **本 README** — 定位与架构
-2. **primitives.md** — P·E·F 三元定义
-3. **axioms.md** — 公理体系（工程公理 / 策略约定 / 思辨三类分区）
-4. **pi-anchor.md** — π-锚的真实定位（防坍缩，非密码学）
+1. **[3分钟第一性原理入门](philosophy/01-quickstart.md)** — 地基
+2. **本 README** — 定位与架构
+3. **primitives.md** — P·E·F 三元定义
+4. **axioms.md** — 公理体系（工程公理 / 策略约定 / 思辨三类分区）
+5. **pi-anchor.md** — π-锚的真实定位（防坍缩，非密码学）
 
 ### 30-Minute Deep Dive
-5. **01-core-spec/pef-7.6-pro-design-spec.md** — 完整设计规范
-6. **examples/** — 4 个 Skill 的真实运行验证（推荐先看，这是"能跑的证明"）
-7. `python demo_minimal.py` — 30 秒自检
+6. **01-core-spec/pef-7.6-pro-design-spec.md** — 完整设计规范
+7. **examples/** — 4 个 Skill 的真实运行验证（推荐先看，这是"能跑的证明"）
+8. `python demo_minimal.py` — 30 秒自检
 
 ### Skill 产品（L2）
-8. **06-skill-products/** — 4 个 Skill 的功能/理论映射/代码仓库/验证证据全链路：
+9. **06-skill-products/** — 4 个 Skill 的功能/理论映射/代码仓库/验证证据全链路：
    - [cle-code-probe](06-skill-products/cle-code-probe.md) · [pimem-memory](06-skill-products/pimem-memory.md) · [pef-longtext](06-skill-products/pef-longtext.md) · [mmc-compiler](06-skill-products/mmc-compiler.md)
 
 ### 面对评审
-8. **review/review-response.md** — 8 项属实指控整改 + 3 项误读澄清
+10. **review/review-response.md** — 8 项属实指控整改 + 3 项误读澄清
+
+### 文学层
+11. **fiction/** — 科幻中篇小说（中文），九锤自我审判
+12. **[the-architects-dream](https://github.com/banbanry/the-architects-dream)** — 英文独立仓库
 
 ### Explore by Interest
 - **Skill 实测证据** → `examples/`（探针 / 记忆 / 长文本 / 多模型编译）
@@ -414,3 +480,5 @@ MIT License · © 2026 沈鹭 (banbanry) · 厦门恒元架构科技有限公司
 ---
 
 *PEF Architecture · 分层 LLM 幻觉治理审计流水线。不提高提取准确率，提高检测坏提取的能力与全部提取的可审计性。*
+
+*地基是 P/E/F 第一性原理——拆解，然后重构。诚实的影子不褪色。*
