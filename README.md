@@ -56,7 +56,9 @@ A first principle is not an auditing tool — auditing is just the causal trace 
 | 第九章 | 洞穴之影 | PEF 从"真实的描述"变成"诚实的影子"——诚实的影子不褪色 |
 | 尾声 | 灰烬中的校正装置 | 校正装置继续运行——不是消除幻觉，是让影子诚实 |
 
-→ **[开始阅读](fiction/README.md)** — 11 章完整小说，与技术文档共存于同一仓库。访客可以选择「读故事」或者「直接看技术源码」。
+→ **[开始阅读（中文版）](fiction/README.md)** — 11 章完整小说，与技术文档共存于同一仓库。访客可以选择「读故事」或者「直接看技术源码」。
+
+→ **[Read the English Edition](https://github.com/banbanry/the-architects-dream)** — Full English translation in a dedicated repository, with worldbuilding docs, character glossary, and reading guides.
 
 ---
 
