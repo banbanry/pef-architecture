@@ -1,5 +1,7 @@
 # Someone Called My Architecture a "Renamed Pseudo-Framework." So I Audited It for 58 Minutes. Here's the Base Layer.
 
+> **版本说明**：本文为早期技术哲学表述（V1，直接陈述观点）。七锤自我审判后的重构版叙事系列见 [philosophy/self-trial/](self-trial/)（共9篇：七锤拷打 + π的位置 + 洞穴之影，第一人称叙事体）。两版并存，V1保留作为演进记录。V2.7 已根据七锤评审修正：P定位从"indestructible"降级为"useful engineering convention"，框架声明可实证测试，选择边界从"完全在框架外"修正为"约束/后果可描述，瞬间不可描述"。
+
 ## The Hook
 
 Someone left a comment on my work:
@@ -70,7 +72,7 @@ You can split "variable" into finer categories. But the act of classification it
 
 You can split "result" into "expected + actual + deviation." But judging "deviation" requires an entity to define what deviation means — you're back to P.
 
-**P is the indestructible starting point.** Not a philosophical claim — an engineering constraint. If you want to systematically explore variable combinations, you have to know *who is combining*.
+**P is a useful engineering convention for single-agent, accountability-required systems — not a logical necessity.** In multi-agent, emergent, or game-theoretic scenarios, P may be distributed, emergent, or absent. If you want to systematically explore variable combinations in a single-agent system, you have to know *who is combining* — but that's a scope constraint, not a universal truth.
 
 ---
 
@@ -100,7 +102,7 @@ My architecture's base layer turns "deconstruct and reconstruct" from a fuzzy mi
 
 ## Why This Base Layer Can Hold Up an Architecture
 
-My architecture is not a "thinking framework." It's a **variable combination exploration engine**.
+My architecture is not a "thinking framework" and not a "decision maker." It's a **decision aid and variable combination exploration engine** — it helps you decompose problems, split variables, enumerate options, and predict consequences, but the final choice (0→1) remains yours.
 
 Here's what it does:
 
@@ -122,11 +124,13 @@ That's the value of this base layer.
 
 This base layer has clear boundaries. I won't oversell it:
 
-1. **It can't explain 0-to-1.** It can describe every trial from 1 to N. But it can't explain "why choose this direction over that one." The choice itself lives outside the framework.
+1. **Choice has three layers — the framework describes two of them.** It can describe the **constraints** of choice (E_out defines what is impossible, E_in defines what is controllable) and the **consequences** of choice (F predicts the outcomes of each option). What it cannot describe is the **moment of choice** itself — when, knowing constraints and consequences, you say "I choose this." That moment is an oracle — uncomputable, but callable. Additionally, every step of 1→N contains a tiny 0→1 — a small choice of direction. The boundary between 0→1 and 1→N is a gradient, not a line.
 
-2. **It's closed.** Everything expressible falls within P/E/F. But closed ≠ complete. The framework can't prove its own completeness from within (Gödel told you that long ago).
+2. **Within its declared scope, it's closed.** Within single-agent, traceable, deterministic engineering systems, everything expressible falls within P/E/F. But outside this scope — emergent behavior, game-theoretic interaction, creative generation — P/E/F is incomplete. Closed ≠ complete, and "closed within scope" ≠ "closed for all expressible things." The framework can't prove its own completeness from within (Gödel told you that long ago).
 
 3. **It doesn't guarantee finding truth.** It guarantees "every trial is reproducible, comparable, and traceable." Where truth actually lives — you approximate it through continuous trial and error.
+
+4. **This framework is empirically testable.** It is not an unfalsifiable post-hoc explanation device. It accepts A/B comparison against other decision frameworks (cost-benefit analysis, decision trees, Bayesian decision theory). The claim — that systematic P/E/F decomposition produces better variable-combination exploration than intuition-only trial-and-error — is a testable hypothesis, not a dogma. A validation protocol is documented in [review/empirical-validation-plan.md](../review/empirical-validation-plan.md).
 
 These aren't defects. They're topological properties. Acknowledging the boundary is how you achieve mastery within it.
 

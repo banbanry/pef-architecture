@@ -244,7 +244,7 @@ def external_calibrate(block: Block, probes: list[Probe]) -> list[Verdict]:
 }
 ```
 
-P/E/F 三元是 PEF 第一性原理的最小完备描述——谁在做、用什么变量做、得到什么结果。任何模型输出都能无损映射到这个 Schema。
+P/E/F 三元是 PEF 第一性原理在适用范围内的最小描述——谁在做、用什么变量做、得到什么结果。任何模型输出都能无损映射到这个 Schema。
 
 ### 5.3 偏差率 ρ 计算
 
