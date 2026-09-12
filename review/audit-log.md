@@ -99,7 +99,7 @@
 | `fiction/00-prologue.md` | 修改 | 新增架构师注记（含本锤接种的偏见、文档动作、时间诚实提示） |
 | `fiction/01-descartes-ghost.md` | 修改 | 注记追加本锤接种的偏见、文档动作 |
 | `fiction/02-godels-loop.md` | 修改 | 注记追加本锤接种的偏见、文档动作 |
-| `fiction/03-thors-hammer.md` | 修改 | 注记追加本锤接种的偏见、文档动作（文件名保留thors-hammer以保持git历史） |
+| `fiction/03-nietzsches-hammer.md` | 修改 | 注记追加本锤接种的偏见、文档动作（文件名保留nietzsches-hammer以保持git历史） |
 | `fiction/04-turings-crush.md` | 修改 | 注记追加本锤接种的偏见、文档动作 |
 | `fiction/05-schrodingers-cat.md` | 修改 | 注记追加本锤接种的偏见、文档动作 |
 | `fiction/06-einsteins-verdict.md` | 修改 | 注记追加本锤接种的偏见、文档动作 |

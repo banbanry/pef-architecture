@@ -12,7 +12,7 @@
 |---|---|---|---|
 | 01 | [Descartes' Ghost — The Subject Layer](01-descartes-ghost.md) | Hammer | Is P (the subject) real, or a convenient fiction? Can audit exist without a subject? |
 | 02 | [Gödel's Loop — The Logic Layer](02-godels-loop.md) | Hammer | Is the framework complete? Can it prove its own completeness? What falls outside P/E/F? |
-| 03 | [Thor's Hammer — The Sincerity Layer](03-thors-hammer.md) | Hammer | Is this framework testable, or an unfalsifiable belief system? Does "post-hoc explanation" evade verification? |
+| 03 | [Thor's Hammer — The Sincerity Layer](03-nietzsches-hammer.md) | Hammer | Is this framework testable, or an unfalsifiable belief system? Does "post-hoc explanation" evade verification? |
 | 04 | [Turing's Crush — The Existence/Choice Layer](04-turings-crush.md) | Hammer | Can the system describe the moment of choice? Or is 0→1 always outside the system? |
 | 05 | [Schrödinger's Cat — The Physics Layer](05-schrodingers-cat.md) | Hammer | Does the act of observation change the observed? Where is the boundary between macro and quantum? |
 | 06 | [Einstein's Verdict — The Time Layer](06-einsteins-verdict.md) | Hammer | Is time absolute or relative? What is π's relationship to physical time? Can π be replaced? |

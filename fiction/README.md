@@ -78,16 +78,16 @@
 
 | 章节 | 技术文档页 | 代码仓库/文件 | 可运行demo |
 |---|---|---|---|
-| 序章 | `design-spec/overview.md` | `primitives/` | `examples/basic-decomposition.py` |
-| 第一章 笛卡尔 | `review-response.md` 第1条 | `primitives/P-layer.py` | `tests/test_p_layer.py` |
-| 第二章 哥德尔 | `review-response.md` 第2条 | `primitives/E-layer.py` | `tests/test_scope_boundary.py` |
-| 第三章 尼采 | `review-response.md` 第3条 | `three-tier-engine/` | `examples/decision-assistance.py` |
-| 第四章 图灵 | `review-response.md` 第4条 | `choice-layer/` | `tests/test_choice_three_layer.py` |
-| 第五章 薛定谔 | `review-response.md` 第5条 | `physical-boundary/` | `examples/dissipative-vs-quantum.py` |
-| 第六章 爱因斯坦 | `review-response.md` 第6条 | `pi-anchor/` | `tests/test_pi_anchor.py` |
-| 第七章 康德 | `review-response.md` 第7条 | `mod-space/` | `examples/space-division-methods.py` |
-| 第八章 π的位置 | `pi-anchor/foundation-assumption.md` | `pi-anchor/homunculus.py` | `tests/test_pi_position.py` |
-| 第九章 洞穴之影 | `axioms.md` 第9条 | `shadow-layer/` | `examples/honest-shadow.py` |
+| 序章 | [`01-core-spec/pef-7.6-pro-design-spec.md`](../01-core-spec/pef-7.6-pro-design-spec.md) | [`primitives.md`](../primitives.md) | [`demo_minimal.py`](../demo_minimal.py) |
+| 第一章 笛卡尔 | [`review/review-response.md`](../review/review-response.md) 第1条 | [`primitives.md`](../primitives.md) | [`demo_minimal.py`](../demo_minimal.py) |
+| 第二章 哥德尔 | [`review/review-response.md`](../review/review-response.md) 第2条 | [`axioms.md`](../axioms.md) | [`demo_minimal.py`](../demo_minimal.py) |
+| 第三章 尼采 | [`review/review-response.md`](../review/review-response.md) 第3条 | [`01-core-spec/pef-three-tier-closed-loop-engine.md`](../01-core-spec/pef-three-tier-closed-loop-engine.md) | — |
+| 第四章 图灵 | [`review/review-response.md`](../review/review-response.md) 第4条 | [`primitives.md`](../primitives.md) | — |
+| 第五章 薛定谔 | [`review/review-response.md`](../review/review-response.md) 第5条 | [`topology.md`](../topology.md) | — |
+| 第六章 爱因斯坦 | [`review/review-response.md`](../review/review-response.md) 第6条 | [`pi-anchor.md`](../pi-anchor.md) | — |
+| 第七章 康德 | [`review/review-response.md`](../review/review-response.md) 第7条 | [`mod3.md`](../mod3.md) | — |
+| 第八章 π的位置 | [`pi-anchor.md`](../pi-anchor.md) | [`pi-anchor.md`](../pi-anchor.md) | — |
+| 第九章 洞穴之影 | [`axioms.md`](../axioms.md) | [`philosophy/self-trial/09-the-shadow-of-the-cave.md`](../philosophy/self-trial/09-the-shadow-of-the-cave.md) | [`examples/cle-probe/reproduce.py`](../examples/cle-probe/reproduce.py) |
 
 从任意一章的「架构师注记」→「文档动作」链接跳转，不超过两次点击，可以抵达对应的原始技术记录。
 
@@ -115,7 +115,7 @@
 
 本小说是PEF架构技术文档的**文学化表达**。小说中的每一个概念——P/E/F、π锚、MOD3、五域隔离、StateLedger——都对应仓库中的真实技术组件。
 
-- 想了解技术细节：查看 [design-spec/](../design-spec/)、[primitives.md](../primitives.md)、[pi-anchor.md](../pi-anchor.md)
+- 想了解技术细节：查看 [01-core-spec/](../01-core-spec/)、[primitives.md](../primitives.md)、[pi-anchor.md](../pi-anchor.md)
 - 想了解九锤的技术整改记录：查看 [review-response.md](../review-response.md)
 - 想了解哲学叙事的英文版本：查看 [philosophy/self-trial/](../philosophy/self-trial/)
 
@@ -123,7 +123,7 @@
 
 ## 字数
 
-约3万字（中文）。
+约9-10万字（中文，含序章+九章+尾声共11个文件，合计约305KB）。
 
 ---
 
